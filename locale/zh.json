@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "title": "光刻 LITHO",
+    "description": "把一句话刻成一张图。81 种风格，出的是能直接压字的干净底图——封面、内文配图、小红书首图。"
+  },
+  "nav": "光刻",
+  "panel": {
+    "title": "光刻",
+    "subtitle": "把一句话刻成一张图。选一张看着顺眼的卡片，剩下的交给我。",
+    "topicLabel": "你想要什么画面？",
+    "topicPlaceholder": "例：一块巨大的 AI 芯片悬浮在夜色里，表面电路像一座俯瞰的城市",
+    "topicHint": "写清「什么东西 + 什么环境」就行，不用管风格和参数。",
+    "styleLabel": "选个感觉",
+    "styleAll": "全部",
+    "useLabel": "用在哪",
+    "generate": "生成图片",
+    "generating": "正在出图…",
+    "regenerate": "再出一张",
+    "download": "保存到本地",
+    "resultTitle": "出好了",
+    "errorTitle": "这次没成功",
+    "emptyTitle": "还没有图",
+    "emptyHint": "上面写一句话，点「生成图片」。",
+    "promptLabel": "本次用的描述（可复制去别处用）"
+  }
+}

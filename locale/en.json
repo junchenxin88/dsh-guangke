@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "title": "LITHO",
+    "description": "Etch a sentence into an image. 81 styles, clean底图 built for overlaying type — covers, inline art, social headers."
+  },
+  "nav": "LITHO",
+  "panel": {
+    "title": "LITHO",
+    "subtitle": "Etch a sentence into an image. Pick the look that feels right.",
+    "topicLabel": "What do you want to see?",
+    "topicPlaceholder": "e.g. a giant AI chip floating in the night, its circuits like a city seen from above",
+    "topicHint": "Just say what it is and where it is. No style or parameter talk needed.",
+    "styleLabel": "Pick a look",
+    "styleAll": "All",
+    "useLabel": "Where it goes",
+    "generate": "Generate",
+    "generating": "Generating…",
+    "regenerate": "One more",
+    "download": "Save to disk",
+    "resultTitle": "Done",
+    "errorTitle": "That didn't work",
+    "emptyTitle": "Nothing yet",
+    "emptyHint": "Describe a scene above, then hit Generate.",
+    "promptLabel": "The description used (copy it anywhere)"
+  }
+}

@@ -1,0 +1,20 @@
+# 依赖与构建产物
+node_modules/
+*.tgz
+
+# 缩略图的中间产物（只发 data/thumbs/*.webp）
+data/thumbs-raw/
+data/thumbs-src/
+data/styles.backup-*.json
+
+# 本机脚本产物 / 临时文件
+.tmp/
+scripts/test-*.mjs
+scripts/probe-*.mjs
+scripts/list-*.mjs
+scripts/migrate-keys.mjs
+
+# 系统
+.DS_Store
+Thumbs.db
+*.log
