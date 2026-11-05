@@ -48,7 +48,11 @@ window.__ModuleLoader__.load({
 .fs-input::placeholder { color: var(--dsw-alias-label-secondary); opacity: .7; }
 .fs-hint { font-size: 12px; color: var(--dsw-alias-label-secondary); margin-top: 7px; }
 
-.fs-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+.fs-chips { display: flex; flex-wrap: nowrap; gap: 7px; margin-bottom: 12px; overflow-x: auto; padding-bottom: 2px;
+  scrollbar-width: none; -webkit-mask-image: linear-gradient(to right, #000 95%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 95%, transparent 100%); }
+.fs-chips::-webkit-scrollbar { display: none; }
+.fs-chips > * { flex: 0 0 auto; }
 .fs-chip { font-size: 12px; padding: 4px 12px; border-radius: 999px; cursor: pointer;
   border: 1px solid var(--dsw-alias-border-l1); background: transparent;
   color: var(--dsw-alias-label-secondary); transition: all .14s; font-family: inherit; }
@@ -57,7 +61,9 @@ window.__ModuleLoader__.load({
   color: var(--dsw-alias-bg-base); font-weight: 600; }
 
 .fs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 10px;
-  max-height: 620px; overflow-y: auto; padding-right: 4px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+  max-height: 448px; overflow-y: auto; padding-right: 4px;
   scrollbar-width: thin; }
 .fs-card { position: relative; text-align: left; cursor: pointer; padding: 0; overflow: hidden;
   border-radius: 10px; background: var(--dsw-alias-bg-layer-1);
