@@ -1,1538 +1,1652 @@
 {
-  "version": "1.0.0",
-  "note": "真源文件。新增/修改风格只改这里，forge.mjs 与 SKILL.md 都以本文件为准。s=信号强度1-5（模型对该词的响应确定性），ae=英文锚点，az=中文锚点，p=色板，w=雷区。｜2026-11-06 增补 20 条：二次元细分与近期画风（S42–S61） | 2026-11-06 追加图文版式与编辑设计 20 条",
-  "styles": [
-    {
-      "id": "S01",
-      "n": "Hyperreal Photography",
-      "z": "超写实摄影",
-      "c": "写实",
-      "s": 5,
-      "ae": "hyperrealistic photography, 85mm f/1.4 shallow depth of field, visible skin pores and fabric weave, softbox side light with subtle rim light, neutral color grade, medium close-up",
-      "az": "超写实摄影，85mm f/1.4 浅景深，可见皮肤毛孔与织物纹理，侧向柔光箱加微弱轮廓光，中性调色，中近景",
-      "p": [
-        "#0E0E10",
-        "#C9A227",
-        "#E8E2D6"
-      ],
-      "comp": "中近景、中心或三分构图，背景压暗做负空间留给标题",
-      "u": "高端品牌、人物背书、严肃内容封面",
-      "w": "别叠 cinematic / 8k / hyper detailed，会出塑料假皮；别让模型画手部细节特写",
-      "m": "MJ v7 / 即梦4 / Nano Banana"
-    },
-    {
-      "id": "S02",
-      "n": "Film Photography",
-      "z": "胶片摄影",
-      "c": "写实",
-      "s": 4,
-      "ae": "shot on Kodak Portra 400, 35mm film grain, halation around highlights, slightly lifted blacks, warm skin tones, natural window light, candid framing",
-      "az": "柯达 Portra 400 胶片质感，35mm 颗粒，高光晕染，黑位微微抬起，暖肤色，自然窗光，抓拍构图",
-      "p": [
-        "#D8C3A5",
-        "#8C6B4F",
-        "#3B322C"
-      ],
-      "comp": "平视抓拍，允许轻微失焦与过曝，画面不必干净",
-      "u": "生活方式、文艺、怀旧叙事、人物故事",
-      "w": "写 film grain 时不要同时写 sharp focus / high clarity，两者互斥",
-      "m": "MJ v7 / Flux / 即梦4"
-    },
-    {
-      "id": "S03",
-      "n": "Documentary Street",
-      "z": "纪实街拍",
-      "c": "写实",
-      "s": 3,
-      "ae": "documentary street photography, 28mm wide angle, harsh afternoon sun, deep shadows, unposed subjects, muted contrast, urban concrete texture",
-      "az": "纪实街拍，28mm 广角，午后硬光，深阴影，非摆拍人物，低反差，城市水泥肌理",
-      "p": [
-        "#2B2B2B",
-        "#A8A29E",
-        "#E4DCCF"
-      ],
-      "comp": "广角贴脸、前景遮挡、非对称构图，容忍杂乱",
-      "u": "社会观察、真实感种草、城市内容",
-      "w": "要写 unposed；否则模型自动让人物看镜头微笑，纪实感全失",
-      "m": "MJ v7 / Flux"
-    },
-    {
-      "id": "S04",
-      "n": "Studio Commercial",
-      "z": "商业棚拍",
-      "c": "写实",
-      "s": 4,
-      "ae": "commercial studio product photography, seamless background, large softbox key light plus gradient falloff, crisp specular highlight, reflection floor, 100mm macro",
-      "az": "商业棚拍产品摄影，无缝背景，大柔光箱主光加渐变压暗，清晰高光，反光地面，100mm 微距",
-      "p": [
-        "#F5F3EF",
-        "#111111",
-        "#B08D57"
-      ],
-      "comp": "正中对称或对角线摆放，四周大量留白",
-      "u": "电商主图、产品带货、品牌 KV",
-      "w": "产品文字/logo 模型会画错，出图后必须后期贴真实包装",
-      "m": "MJ v7 / 即梦4 / Seedream"
-    },
-    {
-      "id": "S05",
-      "n": "Flat Vector Illustration",
-      "z": "扁平矢量插画",
-      "c": "扁平",
-      "s": 5,
-      "ae": "flat vector illustration, solid shapes, no gradients, limited 4-color palette, clean rounded silhouettes, editorial style, generous negative space",
-      "az": "扁平矢量插画，纯色块，无渐变，四色限定，圆润干净轮廓，编辑插画风，大量留白",
-      "p": [
-        "#1B3A6B",
-        "#F2673A",
-        "#F5E1C8",
-        "#2E7D6F"
-      ],
-      "comp": "单中心主体 + 大留白，人物可无五官保持通用",
-      "u": "科技、互联网、商务、公众号内文图",
-      "w": "别写 3d / shadow / texture，一加就不平了；四色以上会脏",
-      "m": "MJ v7 / Flux / 即梦4"
-    },
-    {
-      "id": "S06",
-      "n": "Isometric 2.5D",
-      "z": "等距 2.5D",
-      "c": "扁平",
-      "s": 4,
-      "ae": "isometric 2.5D illustration, 30-degree axonometric projection, floating platforms, soft ambient occlusion shadows, pastel scheme, tiny human figures for scale",
-      "az": "等距 2.5D 插画，30 度轴测投影，悬浮平台，柔和环境光遮蔽阴影，马卡龙配色，微小人物作比例参照",
-      "p": [
-        "#7FB3D5",
-        "#F7DC6F",
-        "#F5B7B1",
-        "#2C3E50"
-      ],
-      "comp": "俯视 45 度、模块化堆叠，中轴可留竖向空间放标题",
-      "u": "SaaS 产品说明、流程图、架构示意",
-      "w": "不写 axonometric 会变成普通俯视图；元素超过 6 个会糊成一团",
-      "m": "MJ v7 / 即梦4 / Seedream"
-    },
-    {
-      "id": "S07",
-      "n": "MBE Style",
-      "z": "MBE 描边风",
-      "c": "扁平",
-      "s": 3,
-      "ae": "MBE style illustration, thick uniform outlines, offset solid shadows, bright candy colors, playful rounded icons, white background",
-      "az": "MBE 风格插画，等粗粗描边，错位纯色投影，糖果亮色，俏皮圆润图标，白底",
-      "p": [
-        "#FFFFFF",
-        "#FF6B6B",
-        "#4ECDC4",
-        "#FFE66D"
-      ],
-      "comp": "散点式平铺图标，白底无透视",
-      "u": "互联网早期风、教育、活动页、图标组",
-      "w": "风格偏旧，用在 2026 年品牌稿会显廉价；只适合做图标/装饰",
-      "m": "MJ v7 / Flux"
-    },
-    {
-      "id": "S08",
-      "n": "Geometric Abstraction",
-      "z": "几何抽象",
-      "c": "扁平",
-      "s": 4,
-      "ae": "geometric abstract composition, bauhaus grid, circles and arcs and rectangles, precise alignment, flat primary colors, risograph-like overlap",
-      "az": "几何抽象构成，包豪斯网格，圆形弧线矩形，精确对齐，纯色三原色，叠印透色",
-      "p": [
-        "#E63946",
-        "#1D3557",
-        "#F1FAEE",
-        "#FFB703"
-      ],
-      "comp": "严格网格或对角线，不对称平衡，可裁切",
-      "u": "品牌底纹、科技背景、活动主视觉",
-      "w": "写 abstract 容易出无意义涂鸦，必须给 bauhaus grid 或 alignment 约束",
-      "m": "MJ v7 / Flux / SDXL"
-    },
-    {
-      "id": "S09",
-      "n": "Watercolor",
-      "z": "水彩",
-      "c": "手绘",
-      "s": 5,
-      "ae": "watercolor illustration, wet-on-wet bleeding edges, granulating pigment, visible cold-press paper texture, transparent washes, white paper reserved highlights",
-      "az": "水彩插画，湿画法晕开的边缘，颗粒沉淀，可见冷压纸纹，透明罩染，留白高光",
-      "p": [
-        "#A8C0D8",
-        "#E8B4A0",
-        "#F2EBDD",
-        "#6B8E8A"
-      ],
-      "comp": "松边构图，主体可溢出边缘，大面积纸白当留白",
-      "u": "文艺、教育、母婴、生活方式",
-      "w": "不写 paper texture 会变成塑料平涂；别写 sharp / crisp",
-      "m": "MJ v7 / Flux / 即梦4"
-    },
-    {
-      "id": "S10",
-      "n": "Pencil Sketch",
-      "z": "铅笔素描",
-      "c": "手绘",
-      "s": 5,
-      "ae": "graphite pencil sketch, cross-hatching shading, visible pencil strokes, smudged graphite, rough sketch paper, monochrome",
-      "az": "石墨铅笔素描，交叉排线，可见笔触，擦蹭灰调，粗纹素描纸，单色",
-      "p": [
-        "#F4F1EA",
-        "#5A5A5A",
-        "#1A1A1A"
-      ],
-      "comp": "手稿感，允许未完成边缘",
-      "u": "概念稿、手作感、知识图解",
-      "w": "会偏灰，出图后要拉对比；别让模型上色",
-      "m": "MJ v7 / SDXL"
-    },
-    {
-      "id": "S11",
-      "n": "Minimal Line Art",
-      "z": "极简线稿",
-      "c": "手绘",
-      "s": 5,
-      "ae": "minimal single-weight line art, continuous contour drawing, no fill, generous white space, slight hand-drawn wobble, single accent color accent",
-      "az": "极简单线稿，等粗连续轮廓，无填色，大量留白，轻微手抖感，单一强调色点缀",
-      "p": [
-        "#FFFFFF",
-        "#111111",
-        "#FF5A5F"
-      ],
-      "comp": "居中单主体，四周 40% 以上留白",
-      "u": "高端极简、女性向、品牌辅助图形",
-      "w": "线稿细节多会脏；主体最多 2 个",
-      "m": "MJ v7 / Flux / Nano Banana"
-    },
-    {
-      "id": "S12",
-      "n": "Marker Illustration",
-      "z": "马克笔插画",
-      "c": "手绘",
-      "s": 3,
-      "ae": "alcohol marker illustration, visible marker streaks and overlap, saturated bleeding color, white gel pen highlights, sketchbook paper",
-      "az": "酒精马克笔插画，可见笔触条纹与叠色，饱和渗色，白色高光笔点缀，速写本纸",
-      "p": [
-        "#FF9F1C",
-        "#2EC4B6",
-        "#E71D36",
-        "#FDFFFC"
-      ],
-      "comp": "手账式拼贴，主体可偏角",
-      "u": "潮流、街头、年轻向",
-      "w": "颜色超过 4 种会糊；写 streaks 才不像矢量",
-      "m": "MJ v7 / Flux"
-    },
-    {
-      "id": "S13",
-      "n": "Children's Crayon",
-      "z": "童画蜡笔",
-      "c": "手绘",
-      "s": 4,
-      "ae": "children's crayon drawing, waxy uneven strokes, off-register coloring outside the lines, naive perspective, kraft paper background",
-      "az": "儿童蜡笔画，蜡质不均笔触，涂出线外的错位上色，稚拙透视，牛皮纸底",
-      "p": [
-        "#F2C14E",
-        "#F78154",
-        "#4D9078",
-        "#B4436C"
-      ],
-      "comp": "平视稚拙，比例故意不准",
-      "u": "亲子、教育、情感叙事",
-      "w": "太完美就假，必须保留 coloring outside the lines",
-      "m": "MJ v7 / 即梦4"
-    },
-    {
-      "id": "S14",
-      "n": "Chibi",
-      "z": "Q 版 chibi",
-      "c": "卡通",
-      "s": 5,
-      "ae": "chibi character, oversized head one-third body ratio, big glossy eyes, tiny limbs, soft cel shading, pastel background, sticker-like clean outline",
-      "az": "Q 版角色，大头占三分之一，大而亮的眼睛，小短四肢，柔和平涂赛璐璐，马卡龙背景，贴纸般干净描边",
-      "p": [
-        "#FFD9E8",
-        "#A0E7E5",
-        "#FFF6B7",
-        "#3C2F4F"
-      ],
-      "comp": "正面站姿居中，头顶与脚下留白",
-      "u": "萌系、周边、社交头像、带货贴纸",
-      "w": "写 realistic 会毁掉比例；一张图只放 1-2 个角色",
-      "m": "MJ v7 / 即梦4 / Nano Banana"
-    },
-    {
-      "id": "S15",
-      "n": "American Cartoon 90s",
-      "z": "美式卡通",
-      "c": "卡通",
-      "s": 4,
-      "ae": "1990s American cartoon style, thick black outlines, rubber-hose limbs, exaggerated expressions, flat cel colors, halftone dot shading",
-      "az": "90 年代美式卡通，粗黑描边，橡皮管四肢，夸张表情，平涂色块，半调网点阴影",
-      "p": [
-        "#FF3B3B",
-        "#FFD23F",
-        "#3D348B",
-        "#F7F7F7"
-      ],
-      "comp": "动态倾斜构图，动作夸张",
-      "u": "娱乐、梗图、年轻品牌",
-      "w": "别同时写 anime，两种脸型会打架",
-      "m": "MJ v7 / Flux / Nano Banana"
-    },
-    {
-      "id": "S16",
-      "n": "Anime",
-      "z": "日式二次元",
-      "c": "卡通",
-      "s": 5,
-      "ae": "japanese anime illustration, clean lineart, two-tone cel shading, detailed hair strands with rim light, soft bloom, school-uniform or modern outfit, focus on eyes",
-      "az": "日式二次元插画，干净线稿，双色平涂赛璐璐，发丝分层带轮廓光，柔光溢出，制服或现代便装，眼神重点刻画",
-      "p": [
-        "#BFD7FF",
-        "#FFC8DD",
-        "#FFFFFF",
-        "#2B2D42"
-      ],
-      "comp": "胸像或半身，视线朝留白侧",
-      "u": "二次元、游戏宣发、年轻人向",
-      "w": "手指/吉他/武器是崩坏重灾区，避免复杂道具；写 anime 别再加 3d",
-      "m": "MJ niji / 即梦4 / Nano Banana"
-    },
-    {
-      "id": "S17",
-      "n": "Retro Cel Animation",
-      "z": "复古赛璐璐动画",
-      "c": "卡通",
-      "s": 4,
-      "ae": "1980s cel animation still, hand-painted background, slight film grain and dust, muted faded palette, soft vignette, airbrushed gradients",
-      "az": "80 年代赛璐璐动画静帧，手绘背景，轻微胶片颗粒与灰尘，褪色低饱和，柔和暗角，喷笔渐变",
-      "p": [
-        "#6C8EAD",
-        "#D9A5A0",
-        "#F0E2C0",
-        "#3A4453"
-      ],
-      "comp": "横构图宽景，人物在中景",
-      "u": "怀旧、叙事、音乐视觉",
-      "w": "写 digital / clean 会毁掉胶片感",
-      "m": "MJ v7 / Flux"
-    },
-    {
-      "id": "S18",
-      "n": "Designer Toy Vinyl",
-      "z": "搪胶潮玩",
-      "c": "潮玩",
-      "s": 4,
-      "ae": "vinyl designer toy, glossy soft-vinyl surface, matte-vs-gloss material contrast, chunky rounded proportions, studio product lighting, shallow DOF, collectible blind-box aesthetic",
-      "az": "搪胶潮玩公仔，光面软胶质感，哑光与亮面材质对比，敦实圆润比例，棚拍产品光，浅景深，盲盒收藏感",
-      "p": [
-        "#F2B5D4",
-        "#8AC6D1",
-        "#FDF6E3",
-        "#2E2A3B"
-      ],
-      "comp": "正面略仰，单色渐变背景，脚下有接触阴影",
-      "u": "潮牌、带货、年轻向封面",
-      "w": "不写 material contrast 会变成塑料玩具；避免写 Labubu 等具体 IP 名（版权+脸会崩），改用特征描述",
-      "m": "MJ v7 / 即梦4 / Seedream"
-    },
-    {
-      "id": "S19",
-      "n": "Brick-Built",
-      "z": "积木风",
-      "c": "潮玩",
-      "s": 4,
-      "ae": "brick-built toy render, visible stud texture, plastic seam lines, macro lens, colorful modular assembly, clean white backdrop",
-      "az": "积木拼搭渲染，可见凸点纹理，塑料合模线，微距镜头，彩色模块化组装，纯白背景",
-      "p": [
-        "#E63946",
-        "#F1C40F",
-        "#1D3557",
-        "#FFFFFF"
-      ],
-      "comp": "45 度俯视微距，主体占画面 60%",
-      "u": "儿童、教育、创意、产品",
-      "w": "砖块过多会糊；别写 LEGO 品牌名",
-      "m": "MJ v7 / Seedream"
-    },
-    {
-      "id": "S20",
-      "n": "Glossy 3D Blob",
-      "z": "3D 泡泡质感",
-      "c": "潮玩",
-      "s": 4,
-      "ae": "glossy 3D blob shapes, subsurface scattering, iridescent gradient, inflated balloon-like forms, soft studio HDRI, candy pastel palette, octane render look",
-      "az": "3D 泡泡形体，次表面散射，虹彩渐变，充气气球般曲面，柔和 HDRI 影棚光，糖果马卡龙色，Octane 渲染质感",
-      "p": [
-        "#FFB3E6",
-        "#B3E5FF",
-        "#FFF4B3",
-        "#FFFFFF"
-      ],
-      "comp": "悬浮堆叠，居中，背景纯色渐变",
-      "u": "社交封面、活动主视觉、年轻品牌",
-      "w": "写 iridescent 容易过曝成一片白，要配 soft lighting",
-      "m": "MJ v7 / Seedream / Nano Banana"
-    },
-    {
-      "id": "S21",
-      "n": "Ink Wash",
-      "z": "水墨",
-      "c": "国风",
-      "s": 5,
-      "ae": "chinese ink wash painting, xuan paper texture, wet brush diffusion, dry-brush flying white strokes, monochrome with single vermilion seal, large empty space",
-      "az": "中国水墨画，宣纸肌理，湿笔洇散，枯笔飞白，黑白为主加一点朱砂印章，大面积留白",
-      "p": [
-        "#F7F4EC",
-        "#2B2B2B",
-        "#B33A3A"
-      ],
-      "comp": "疏可走马，主体偏一角，留白即气韵",
-      "u": "传统文化、品牌联名、高客单内容",
-      "w": "写 chinese ink 但叠 colorful 会翻车成脏色；别让模型画复杂人物",
-      "m": "MJ v7 / 即梦4"
-    },
-    {
-      "id": "S22",
-      "n": "Gongbi",
-      "z": "工笔重彩",
-      "c": "国风",
-      "s": 4,
-      "ae": "chinese gongbi fine-line painting, precise even contour lines, layered mineral pigment washes, gold leaf accents, silk ground, symmetrical composition",
-      "az": "中国工笔重彩，均匀精细勾线，多层矿物色渲染，金箔点缀，绢本底，对称构图",
-      "p": [
-        "#0F4C5C",
-        "#C9A227",
-        "#E8DCC4",
-        "#7B2D26"
-      ],
-      "comp": "严格对称或居中，边框式构图",
-      "u": "国潮高端、礼盒、文化 IP",
-      "w": "线条密度高，小尺寸会糊，建议 ≥2K 出图",
-      "m": "MJ v7 / 即梦4"
-    },
-    {
-      "id": "S23",
-      "n": "Chinese Cyber 国潮赛博",
-      "z": "国风赛博",
-      "c": "国风",
-      "s": 4,
-      "ae": "chinese cyberpunk, neon-lit hanfu silhouettes, holographic calligraphy, red lanterns against wet neon streets, jade-green and magenta light, misty rooftops",
-      "az": "国风赛博朋克，霓虹下的汉服剪影，全息书法，湿街红灯笼，翠绿与品红光，雾中屋檐",
-      "p": [
-        "#0B0B14",
-        "#E63946",
-        "#2A9D8F",
-        "#F1FAEE"
-      ],
-      "comp": "低角度仰拍，前景灯笼框景，纵向可放标题",
-      "u": "国潮品牌、游戏、活动主视觉",
-      "w": "汉服细节模型画不准，主体宜剪影或半身；别堆太多元素",
-      "m": "MJ v7 / 即梦4 / Seedream"
-    },
-    {
-      "id": "S24",
-      "n": "Dunhuang Mineral",
-      "z": "敦煌矿物色",
-      "c": "国风",
-      "s": 4,
-      "ae": "dunhuang mural style, malachite green and azurite blue and ochre mineral pigments, weathered flaking texture, flowing ribbon figures, cave wall cracks",
-      "az": "敦煌壁画风，石绿石青赭石矿物色，斑驳剥落肌理，飞天飘带，洞窟墙面裂纹",
-      "p": [
-        "#2E6E5E",
-        "#2C4A7C",
-        "#B5723A",
-        "#D9C9A3"
-      ],
-      "comp": "横向长卷或方幅满构，飘带引导视线",
-      "u": "文化 IP、文旅、高端联名",
-      "w": "颜色偏闷，出图后需提亮；人物五官要模糊处理否则崩",
-      "m": "MJ v7 / 即梦4"
-    },
-    {
-      "id": "S25",
-      "n": "Paper Cut",
-      "z": "剪纸年画",
-      "c": "国风",
-      "s": 4,
-      "ae": "chinese paper-cut art, layered paper with real drop shadows, symmetrical auspicious motifs, vermilion and gold, rough fiber paper edge",
-      "az": "中国剪纸艺术，多层纸张带真实投影，对称吉祥纹样，朱红与金，毛边纸纤维",
-      "p": [
-        "#D62828",
-        "#F77F00",
-        "#FFF3D6",
-        "#003049"
-      ],
-      "comp": "中心对称，纹样填满画面边缘",
-      "u": "节庆、年货、国潮包装",
-      "w": "写 flat 会失去纸层厚度，必须写 drop shadows",
-      "m": "MJ v7 / Seedream"
-    },
-    {
-      "id": "S26",
-      "n": "Mid-Century Poster",
-      "z": "复古海报",
-      "c": "复古",
-      "s": 4,
-      "ae": "mid-century modern poster, screen-printed flat inks, off-register color layers, grainy paper stock, bold geometric shapes, limited retro palette",
-      "az": "中世纪现代海报，丝网印刷平涂油墨，套色轻微错位，粗糙纸品，大胆几何形，限定复古色",
-      "p": [
-        "#E8D5B7",
-        "#D65A31",
-        "#22223B",
-        "#4A4E69"
-      ],
-      "comp": "居中大字位 + 下方图形带，2:3 竖版最佳",
-      "u": "品牌海报、活动、怀旧调性",
-      "w": "小字必崩，文字信息留到后期排版",
-      "m": "MJ v7 / Flux"
-    },
-    {
-      "id": "S27",
-      "n": "Risograph",
-      "z": "Riso 孔版印刷",
-      "c": "复古",
-      "s": 4,
-      "ae": "risograph print, two-color overprint with visible misregistration, coarse ink grain, fluorescent pink and teal, uncoated paper fiber",
-      "az": "Riso 孔版印刷，双色叠印可见错版，粗颗粒油墨，荧光粉与青绿，非涂布纸纤维",
-      "p": [
-        "#FF48B0",
-        "#00A6A6",
-        "#F5F0E1"
-      ],
-      "comp": "满构或大色块切分，错版作为风格",
-      "u": "独立出版、文艺、展陈",
-      "w": "最多 3 色；写 clean vector 会破坏错版感",
-      "m": "MJ v7 / Flux"
-    },
-    {
-      "id": "S28",
-      "n": "Vaporwave VHS",
-      "z": "蒸汽波",
-      "c": "复古",
-      "s": 5,
-      "ae": "vaporwave aesthetic, VHS scanlines and tape noise, chrome gradient text, palm silhouettes, grid horizon, magenta and cyan glow, 80s computer UI fragments",
-      "az": "蒸汽波美学，VHS 扫描线与磁带噪点，镀铬渐变字，棕榈剪影，网格地平线，品红青绿辉光，80 年代电脑界面碎片",
-      "p": [
-        "#FF6AD5",
-        "#8795E8",
-        "#94D0FF",
-        "#1B0033"
-      ],
-      "comp": "地平线居中分割，上方大字下方网格",
-      "u": "亚文化、音乐、Z 世代",
-      "w": "容易廉价，务必加 scanlines 与 tape noise 压住",
-      "m": "MJ v7 / Flux"
-    },
-    {
-      "id": "S29",
-      "n": "Vintage Magazine",
-      "z": "旧画报",
-      "c": "复古",
-      "s": 3,
-      "ae": "1970s vintage magazine editorial, warm faded film, soft focus, mustard and burnt orange, knit textures, relaxed poses, printed paper grain",
-      "az": "70 年代旧画报内页，暖调褪色胶片，柔焦，芥末黄与焦橙，针织质感，松弛姿态，印刷纸纹",
-      "p": [
-        "#C97B3F",
-        "#E8C07D",
-        "#5B4636",
-        "#F2E8D5"
-      ],
-      "comp": "竖版半身，标题留上方 20%",
-      "u": "穿搭、怀旧叙事、品牌故事",
-      "w": "柔焦过度会显糊，加一句 controlled soft focus",
-      "m": "MJ v7 / Flux"
-    },
-    {
-      "id": "S30",
-      "n": "Cyberpunk",
-      "z": "赛博朋克",
-      "c": "科技",
-      "s": 5,
-      "ae": "cyberpunk night cityscape, neon signage in magenta and cyan, wet asphalt reflections, volumetric haze, anamorphic lens flare, dystopian high-rise density, 35mm",
-      "az": "赛博朋克夜景城市，品红与青色霓虹招牌，湿沥青倒影，体积雾，宽银幕眩光，反乌托邦高楼密度，35mm",
-      "p": [
-        "#0A0A12",
-        "#FF2E88",
-        "#00E5FF",
-        "#FFD166"
-      ],
-      "comp": "低机位仰拍街道纵深，天空留暗部放标题",
-      "u": "科技、AI、游戏、金融科技",
-      "w": "霓虹词重复 3 次以上糊成粉雾；写 bright / cheerful 会中和暗调",
-      "m": "MJ v7 / 即梦4 / Flux"
-    },
-    {
-      "id": "S31",
-      "n": "Holographic HUD",
-      "z": "全息 HUD",
-      "c": "科技",
-      "s": 4,
-      "ae": "holographic HUD interface overlay, thin cyan wireframe vectors, floating data panels, particle dispersion, dark navy void, depth-of-field bokeh grid",
-      "az": "全息 HUD 界面叠加，青色细线框矢量，浮空数据面板，粒子消散，深海军蓝虚空，景深光斑网格",
-      "p": [
-        "#04121F",
-        "#28E0FF",
-        "#7B61FF",
-        "#E6F7FF"
-      ],
-      "comp": "中心主体 + 环绕 UI 层，四周数据留白",
-      "u": "AI 产品、数据、前沿科技",
-      "w": "HUD 上的假文字会糊，只保留线框与短数字；别让模型写长文案",
-      "m": "MJ v7 / 即梦4 / Nano Banana"
-    },
-    {
-      "id": "S32",
-      "n": "Data Visualization",
-      "z": "数据可视化",
-      "c": "科技",
-      "s": 3,
-      "ae": "abstract data visualization, flowing particle streams, network graph nodes, layered translucent ribbons, cool-to-warm gradient mapping, dark background",
-      "az": "抽象数据可视化，流动粒子流，网络图节点，多层半透明飘带，冷到暖的渐变映射，深色背景",
-      "p": [
-        "#0D1B2A",
-        "#1B998B",
-        "#EDF2F4",
-        "#F46036"
-      ],
-      "comp": "满构流线，中心密度高、边缘稀",
-      "u": "报告封面、白皮书、金融科技",
-      "w": "让它画真实图表必然数据错误；只用示意图，真数据自己画",
-      "m": "MJ v7 / Flux"
-    },
-    {
-      "id": "S33",
-      "n": "Biomechanical",
-      "z": "生物机械",
-      "c": "科技",
-      "s": 4,
-      "ae": "biomechanical fusion, organic muscle fibers interwoven with brushed metal, exposed cable tendons, chrome and oxblood, surgical rim lighting, macro detail",
-      "az": "生物机械融合，有机肌纤维与拉丝金属交织，外露线缆肌腱，铬与牛血红，手术式轮廓光，微距细节",
-      "p": [
-        "#1A1A1D",
-        "#8B0000",
-        "#B8B8B8",
-        "#3D3D3D"
-      ],
-      "comp": "特写局部的有机机械交界，留暗场",
-      "u": "硬核科技、医疗、游戏",
-      "w": "易滑向恐怖血腥，电商/公众号慎用",
-      "m": "MJ v7 / Flux"
-    },
-    {
-      "id": "S34",
-      "n": "Memphis",
-      "z": "孟菲斯",
-      "c": "孟菲斯波普",
-      "s": 5,
-      "ae": "memphis design, 80s postmodern pattern, squiggles and confetti dots and zigzags, clashing bright palette, black outlines on white, playful disorder",
-      "az": "孟菲斯设计，80 年代后现代图案，波浪线与彩纸点与锯齿，撞色亮色，白底黑线，俏皮失序",
-      "p": [
-        "#FF5D8F",
-        "#FFCA3A",
-        "#8AC926",
-        "#1982C4"
-      ],
-      "comp": "散点爆发式布局，中心留白给主体",
-      "u": "年轻化活动、促销、社交封面",
-      "w": "元素过密会像低价海报；主色最多 3 个 + 黑白",
-      "m": "MJ v7 / Nano Banana"
-    },
-    {
-      "id": "S35",
-      "n": "Pop Art",
-      "z": "波普艺术",
-      "c": "孟菲斯波普",
-      "s": 5,
-      "ae": "pop art screen print, ben-day dots, bold black contour, primary colors plus magenta, halftone shading, comic panel framing, repetition grid",
-      "az": "波普艺术丝网印，本戴点，粗黑轮廓，三原色加品红，半调网点阴影，漫画分格边框，重复网格",
-      "p": [
-        "#FFD400",
-        "#FF2D55",
-        "#0057FF",
-        "#111111"
-      ],
-      "comp": "重复分格或单主体居中，高对比",
-      "u": "强冲击封面、话题营销、潮流",
-      "w": "人脸会被风格化到认不出，人物向内容慎用",
-      "m": "MJ v7 / Nano Banana"
-    },
-    {
-      "id": "S36",
-      "n": "Y2K Chrome",
-      "z": "Y2K 千禧",
-      "c": "孟菲斯波普",
-      "s": 4,
-      "ae": "Y2K aesthetic, liquid chrome blobs, star sparkles, translucent bubble plastic, low-rise metallic typography, baby blue and silver, cyber-fairy vibe",
-      "az": "Y2K 美学，液态铬块，星星闪片，半透明泡泡塑料，低腰金属字，婴儿蓝与银，赛博精灵感",
-      "p": [
-        "#C9D6FF",
-        "#E2E2E2",
-        "#FFB6E1",
-        "#4A4AFF"
-      ],
-      "comp": "中心大主体 + 星芒点缀，圆形聚焦",
-      "u": "美妆、时尚、Z 世代活动",
-      "w": "铬反射容易过曝，配 soft studio light",
-      "m": "MJ v7 / Seedream / Nano Banana"
-    },
-    {
-      "id": "S37",
-      "n": "Grain & Noise",
-      "z": "噪点颗粒肌理",
-      "c": "肌理",
-      "s": 3,
-      "ae": "heavy film grain overlay, digital noise texture, slight chromatic aberration, faded contrast curve, dusty light leak, analog imperfection",
-      "az": "重胶片颗粒叠加，数字噪点肌理，轻微色差，褪色对比曲线，灰尘漏光，模拟不完美",
-      "p": [
-        "#D6D2C4",
-        "#7A7265",
-        "#2F2B26"
-      ],
-      "comp": "中性，作为叠加层不改变构图",
-      "u": "文艺、杂志感、任何需要去塑料味的设计",
-      "w": "这是叠加层不是主风格，必须依附在别的风格上",
-      "m": "任意"
-    },
-    {
-      "id": "S38",
-      "n": "Paper Collage",
-      "z": "纸张拼贴",
-      "c": "肌理",
-      "s": 4,
-      "ae": "torn paper collage, layered cut-outs with hard drop shadows, magazine clipping fragments, masking tape, mixed paper textures, slightly misaligned",
-      "az": "撕纸拼贴，多层剪纸带硬投影，杂志剪报碎片，胶带痕迹，混合纸张肌理，轻微错位",
-      "p": [
-        "#EFE6D6",
-        "#C1473B",
-        "#2F4858",
-        "#E4B363"
-      ],
-      "comp": "层叠错落，边缘可出画",
-      "u": "独立杂志、手作感、观点类内容",
-      "w": "层数过多会脏，控制在 5 层内",
-      "m": "MJ v7 / Flux"
-    },
-    {
-      "id": "S39",
-      "n": "Halftone",
-      "z": "半调网点",
-      "c": "肌理",
-      "s": 4,
-      "ae": "halftone print texture, oversized ben-day dots, CMYK misregistration, newsprint paper, monochrome with one spot color",
-      "az": "半调网点印刷，大号本戴点，CMYK 套印错位，新闻纸，单色加一个专色",
-      "p": [
-        "#F2F2EE",
-        "#1C1C1C",
-        "#E4572E"
-      ],
-      "comp": "大主体 + 网点渐变过渡",
-      "u": "编辑设计、观点、复古科技感",
-      "w": "网点过粗会看不清主体，分层使用",
-      "m": "MJ v7 / Flux"
-    },
-    {
-      "id": "S40",
-      "n": "Clay 3D",
-      "z": "黏土 3D",
-      "c": "商务3D",
-      "s": 4,
-      "ae": "claymorphism 3D render, matte plasticine surface with subtle fingerprints, soft rounded forms, pastel palette, diffuse studio lighting, tiny contact shadows",
-      "az": "黏土拟态 3D 渲染，哑光橡皮泥表面带细微指痕，柔和圆润形体，马卡龙色，漫射棚光，微弱接触阴影",
-      "p": [
-        "#F6D6C9",
-        "#A8DADC",
-        "#F1FAEE",
-        "#457B9D"
-      ],
-      "comp": "悬浮组合，单色渐变背景",
-      "u": "SaaS、教育、亲和力品牌",
-      "w": "写 glossy 会变塑料，黏土必须 matte",
-      "m": "MJ v7 / Seedream"
-    },
-    {
-      "id": "S41",
-      "n": "Glass Liquid",
-      "z": "玻璃液态",
-      "c": "商务3D",
-      "s": 4,
-      "ae": "translucent frosted glass forms, refraction caustics, liquid chrome ribbon, gradient backdrop, sharp specular edges, refractive 3D render",
-      "az": "半透明磨砂玻璃体，折射焦散，液态铬飘带，渐变背景，锐利高光边缘，折射 3D 渲染",
-      "p": [
-        "#0F172A",
-        "#7DD3FC",
-        "#C7D2FE",
-        "#F8FAFC"
-      ],
-      "comp": "中心悬浮，背景纵向渐变",
-      "u": "AI/云服务、发布会、高端品牌",
-      "w": "透明体容易糊成一片，必须给 caustics 与 sharp edges",
-      "m": "MJ v7 / Seedream / Nano Banana"
-    },
-    {
-      "id": "S42",
-      "n": "Makoto Shinkai",
-      "z": "新海诚风",
-      "c": "二次元",
-      "s": 5,
-      "ae": "Makoto Shinkai anime background art, hyper-detailed cloudscape, god rays through cumulus, saturated dusk gradient from violet to gold, lens flare and bokeh, luminous rim light on characters, crisp line art",
-      "az": "新海诚式动画背景，超细云层，积云间穿透的耶稣光，紫到金的黄昏渐变，镜头光晕与散景，角色边缘高光，线条清晰",
-      "p": [
-        "#0B1D3A",
-        "#F5A65B",
-        "#FFD9A0",
-        "#8FD3F4"
-      ],
-      "comp": "低角度，天空占上半幅三分之二，人物小且靠边",
-      "u": "情感向内容、青春题材、音乐封面",
-      "w": "光晕一多就发灰，云必须分层；人物占比过大就失去\"风景感\"",
-      "m": "Seedream / Nano Banana / MJ v7"
-    },
-    {
-      "id": "S43",
-      "n": "Kyoto Animation",
-      "z": "京都动画风",
-      "c": "二次元",
-      "s": 4,
-      "ae": "Kyoto Animation style, soft cel shading with delicate line art, pastel palette, gentle ambient occlusion, subtle bloom, clean uncluttered everyday scene, warm windowsill light",
-      "az": "京都动画式，柔和赛璐璐上色，线条纤细，粉彩配色，轻柔环境光，微弱泛光，干净的日常场景，窗边暖光",
-      "p": [
-        "#FDF6F0",
-        "#F2B5C4",
-        "#8FC1E3",
-        "#4A4A68"
-      ],
-      "comp": "平视或微俯，日常空间，主体偏中但不居中",
-      "u": "生活、治愈、情感、日系品牌",
-      "w": "软光容易糊成一片白，必须保留线条与阴影层次",
-      "m": "Seedream / Nano Banana"
-    },
-    {
-      "id": "S44",
-      "n": "Cel Shading",
-      "z": "赛璐璐平涂",
-      "c": "二次元",
-      "s": 5,
-      "ae": "cel shading, hard-edged shadow blocks, flat two-tone shading with no gradients, bold uniform outlines, anime screencap look, saturated flat colors, simple background",
-      "az": "赛璐璐平涂，硬边阴影块，双色平涂无渐变，粗细一致的轮廓线，动画截帧感，饱和纯色，简单背景",
-      "p": [
-        "#1A1A2E",
-        "#FF6B6B",
-        "#FFD93D",
-        "#4ECDC4"
-      ],
-      "comp": "正面或四分之三侧面，半身，背景留纯色或简单渐变",
-      "u": "头像、表情包、二次元封面",
-      "w": "一旦出现柔光渐变就变成厚涂；轮廓线不统一会显得廉价",
-      "m": "Seedream / Nano Banana / GPT-Image"
-    },
-    {
-      "id": "S45",
-      "n": "Painterly Anime",
-      "z": "厚涂二次元",
-      "c": "二次元",
-      "s": 4,
-      "ae": "thick painterly anime, semi-impasto brushwork, mixed flat and rendered areas, dramatic rim light, dense color blocking, visible stroke direction, dark background",
-      "az": "厚涂二次元，半厚涂笔触，平涂与细化混用，戏剧性边缘光，密集色块，可见笔触方向，深色背景",
-      "p": [
-        "#241E2E",
-        "#C8506E",
-        "#F0A868",
-        "#6C5B7B"
-      ],
-      "comp": "半身特写，四分之三侧脸，背景压暗",
-      "u": "角色立绘、游戏宣传、同人",
-      "w": "厚涂最容易脏，要限定 4 色以内并强调\"visible strokes\"",
-      "m": "Seedream / MJ v7"
-    },
-    {
-      "id": "S46",
-      "n": "Korean Webtoon",
-      "z": "韩系插画",
-      "c": "二次元",
-      "s": 4,
-      "ae": "Korean webtoon illustration, polished rendering, glossy skin highlights, soft gradient shading, stylish modern fashion, clean vector-like edges, studio softbox light",
-      "az": "韩系网漫插画，精细渲染，皮肤高光水润，柔和渐变阴影，时尚现代穿搭，接近矢量的干净边缘，棚拍柔光",
-      "p": [
-        "#F7E9E1",
-        "#D98C8C",
-        "#7A9CC6",
-        "#2E2A33"
-      ],
-      "comp": "竖构图，人物占 60%，背景虚化",
-      "u": "美妆、穿搭、人物号、小红书封面",
-      "w": "肤色容易塑料感，必须写 subsurface 与 subtle texture",
-      "m": "Seedream / Nano Banana / GPT-Image"
-    },
-    {
-      "id": "S47",
-      "n": "Chinese Anime",
-      "z": "国风二次元",
-      "c": "二次元",
-      "s": 4,
-      "ae": "Chinese anime style, ink-wash inspired linework over modern cel shading, hanfu silhouette with flowing sleeves, plum blossom and cloud motifs, muted jade green and vermilion, empty space composition",
-      "az": "国风二次元，水墨感线条叠现代赛璐璐，汉服剪影与飘带，梅花与云纹，克制的青绿与朱红，留白构图",
-      "p": [
-        "#F5F0E6",
-        "#7A9E7E",
-        "#C8553D",
-        "#2B2B2B"
-      ],
-      "comp": "竖构图，人物侧身，大片留白",
-      "u": "国潮品牌、古风内容、文旅",
-      "w": "汉服细节必崩，用剪影与大体块；头饰别写具体形制",
-      "m": "Seedream / 即梦"
-    },
-    {
-      "id": "S48",
-      "n": "Dark Fantasy Anime",
-      "z": "暗黑二次元",
-      "c": "二次元",
-      "s": 4,
-      "ae": "dark fantasy anime, high contrast chiaroscuro, crimson and violet accent light, gothic ornament silhouettes, heavy vignette, moody rim light, desaturated darks",
-      "az": "暗黑幻想二次元，高对比明暗，绯红与紫罗兰点缀光，哥特装饰剪影，重度暗角，阴郁边缘光，去饱和暗部",
-      "p": [
-        "#0A0A0F",
-        "#7B1E3B",
-        "#B08BBB",
-        "#E8E3D9"
-      ],
-      "comp": "低角度仰视，人物居中偏下，背景深渊感",
-      "u": "游戏、小说、悬疑内容",
-      "w": "暗部全黑会丢结构，必须给 rim light；别写 bright",
-      "m": "Seedream / MJ v7"
-    },
-    {
-      "id": "S49",
-      "n": "Pixel Art",
-      "z": "像素风",
-      "c": "二次元",
-      "s": 5,
-      "ae": "pixel art, 32-bit sprite aesthetic, limited 16-color palette, dithering gradients, crisp blocky pixels aligned to grid, isometric game scene, no anti-aliasing",
-      "az": "像素画，32 位精灵美学，16 色限定，抖动过渡，对齐网格的硬像素块，等距游戏场景，无抗锯齿",
-      "p": [
-        "#1B1B2F",
-        "#E94F37",
-        "#F6C453",
-        "#44BBA4"
-      ],
-      "comp": "等距 45 度或正侧视，场景填满画面",
-      "u": "游戏、科技怀旧、独立开发者",
-      "w": "写 realistic 就崩；必须强调 no anti-aliasing 与 limited palette",
-      "m": "Seedream / MJ v7"
-    },
-    {
-      "id": "S50",
-      "n": "American Comic",
-      "z": "美式网漫",
-      "c": "二次元",
-      "s": 4,
-      "ae": "American comic book art, heavy ink outlines, halftone dot shading, dynamic low-angle perspective, bold primary color accents, noir shadow shapes, speed lines",
-      "az": "美式漫画，粗墨线，半调网点阴影，动态低角度透视，强对比原色点缀，黑色电影式阴影块，速度线",
-      "p": [
-        "#111111",
-        "#E63946",
-        "#F1FAEE",
-        "#457B9D"
-      ],
-      "comp": "斜角动态构图，人物占满，背景放射线",
-      "u": "剧情号、观点输出、男性向内容",
-      "w": "网点过密会脏，控制在阴影区；别写 soft light",
-      "m": "Seedream / GPT-Image"
-    },
-    {
-      "id": "S51",
-      "n": "Liquid Chrome",
-      "z": "液态金属",
-      "c": "科技",
-      "s": 4,
-      "ae": "liquid chrome, mercury-like flowing forms, molten metal reflections, high-gloss anamorphic highlights, dark studio backdrop, mirror surface with environment streaks",
-      "az": "液态金属，水银般流动形态，熔融金属反射，高光拉丝，深色棚拍背景，镜面反射环境条纹",
-      "p": [
-        "#0B0B0F",
-        "#C0C6D1",
-        "#8A93A6",
-        "#F2F4F8"
-      ],
-      "comp": "中心悬浮，主体占 50%，四周留暗",
-      "u": "AI、芯片、金融科技、发布会",
-      "w": "不写 environment reflection 就变成塑料球；背景必须暗",
-      "m": "Seedream / MJ v7 / Nano Banana"
-    },
-    {
-      "id": "S52",
-      "n": "Jelly Candy",
-      "z": "果冻糖质感",
-      "c": "潮玩",
-      "s": 4,
-      "ae": "translucent jelly material, glossy syrup surface, subsurface scattering, candy palette, soft specular bloom, soft studio light on seamless backdrop",
-      "az": "半透明果冻材质，糖浆光泽表面，次表面散射，糖果配色，柔和镜面泛光，无缝背景棚光",
-      "p": [
-        "#FFEBF0",
-        "#FF7AA2",
-        "#7BD3EA",
-        "#FFF6A9"
-      ],
-      "comp": "正面平视，主体居中，大量留白",
-      "u": "母婴、美妆、活动物料、小红书",
-      "w": "不写 subsurface scattering 会变成硬塑料;背景一杂就廉价",
-      "m": "Seedream / Nano Banana"
-    },
-    {
-      "id": "S53",
-      "n": "Frosted Glass",
-      "z": "毛玻璃",
-      "c": "肌理",
-      "s": 3,
-      "ae": "frosted glass overlay, heavy gaussian blur bands, fine grain, layered translucent panels, muted duotone, soft edge lighting",
-      "az": "毛玻璃叠加，强高斯模糊带，细颗粒，多层半透明面板，克制双色调，边缘柔光",
-      "p": [
-        "#E8EAED",
-        "#9AA5B1",
-        "#4A5568",
-        "#FFFFFF"
-      ],
-      "comp": "分层叠加，几何切割，留白多于内容",
-      "u": "UI 展示、科技报告、高端商务",
-      "w": "模糊过头就没主体，必须留一块清晰区；不要写 colorful",
-      "m": "Seedream / MJ v7"
-    },
-    {
-      "id": "S54",
-      "n": "CCD Digital",
-      "z": "CCD 数码感",
-      "c": "复古",
-      "s": 4,
-      "ae": "early digital camera look, blown highlights, chromatic aberration on edges, harsh direct on-camera flash, slight motion blur, dated color science, visible sensor noise",
-      "az": "早期数码相机质感，高光溢出，边缘色差，机顶直闪硬光，轻微动态模糊，过时的色彩科学，可见传感器噪点",
-      "p": [
-        "#F2EDE4",
-        "#C9A227",
-        "#3A3A3A",
-        "#8C1C13"
-      ],
-      "comp": "随手拍构图，主体不在中心，边缘裁切",
-      "u": "穿搭、探店、怀旧内容、小红书",
-      "w": "别写 clean / professional；一定要写 on-camera flash 和 noise",
-      "m": "Seedream / Nano Banana"
-    },
-    {
-      "id": "S55",
-      "n": "Lo-fi Illustration",
-      "z": "Lo-fi 复古插画",
-      "c": "复古",
-      "s": 4,
-      "ae": "lo-fi indie illustration, grainy paper texture, muted earth palette, naive simplified shapes, screen-print misregistration, hand-drawn wobbly lines",
-      "az": "Lo-fi 独立插画，颗粒纸质纹理，低饱和土色，稚拙简化造型，丝网印刷错版感，手绘抖动线条",
-      "p": [
-        "#EFE6D8",
-        "#A8756B",
-        "#5B7B7A",
-        "#2F3A40"
-      ],
-      "comp": "平面化构图，元素并置，无透视",
-      "u": "播客封面、独立品牌、文艺内容",
-      "w": "不写 grainy texture 会变成扁平矢量；别追求精细",
-      "m": "Seedream / MJ v7"
-    },
-    {
-      "id": "S56",
-      "n": "Stylized 3D Cartoon",
-      "z": "3D 卡通渲染",
-      "c": "商务3D",
-      "s": 4,
-      "ae": "stylized 3D cartoon render, exaggerated Pixar-like proportions, soft global illumination, rim light, glossy plastic and matte fabric materials, shallow depth of field",
-      "az": "3D 卡通渲染，皮克斯式夸张比例，柔和全局光照，边缘光，亮面塑料与哑光布料对比，浅景深",
-      "p": [
-        "#FFF3E2",
-        "#FF9F5A",
-        "#4FA8D8",
-        "#2D2A32"
-      ],
-      "comp": "正面平视，主体居中，背景纯色渐变",
-      "u": "品牌吉祥物、科普、儿童内容",
-      "w": "不写 material contrast 会像廉价手办；比例要夸张",
-      "m": "Seedream / MJ v7 / Nano Banana"
-    },
-    {
-      "id": "S57",
-      "n": "Plush Knit",
-      "z": "毛绒针织",
-      "c": "潮玩",
-      "s": 4,
-      "ae": "plush knitted wool texture, visible fiber fuzz, soft felt shapes, cozy warm lighting, handcrafted imperfection, macro detail on stitches",
-      "az": "毛绒针织质感，可见纤维绒毛，柔软毡布造型，温暖柔光，手工不完美感，针脚微距细节",
-      "p": [
-        "#F5E6D3",
-        "#E0A899",
-        "#93B5A0",
-        "#6B4F3A"
-      ],
-      "comp": "近景，主体充满画面，背景虚化织物",
-      "u": "母婴、家居、节日营销",
-      "w": "必须写 fiber fuzz，否则变成光滑塑料；光要柔",
-      "m": "Seedream / Nano Banana"
-    },
-    {
-      "id": "S58",
-      "n": "Woodcut Print",
-      "z": "木刻版画",
-      "c": "复古",
-      "s": 4,
-      "ae": "woodcut print, bold gouged line work, high contrast black with one spot color, rough handmade paper texture, folk art energy, visible chisel marks",
-      "az": "木刻版画，粗犷刻刀线条，黑加单色高对比，粗糙手工纸纹，民间艺术气息，可见凿痕",
-      "p": [
-        "#1C1C1C",
-        "#D9C9A3",
-        "#A63A2E",
-        "#F2EAD9"
-      ],
-      "comp": "平面正面，图形化轮廓，不留透视",
-      "u": "文化内容、书籍、非遗、品牌联名",
-      "w": "别写 detail / realistic；线条必须粗且少",
-      "m": "Seedream / MJ v7"
-    },
-    {
-      "id": "S59",
-      "n": "Silkscreen",
-      "z": "丝网印刷",
-      "c": "复古",
-      "s": 4,
-      "ae": "silkscreen print, spot color separation, slight ink bleed, registration offset between layers, flat opaque layers, retro poster aesthetic, uncoated paper grain",
-      "az": "丝网印刷，专色分版，轻微油墨溢出，图层套印偏移，平涂不透明色块，复古海报美学，非涂布纸颗粒",
-      "p": [
-        "#F4F1E8",
-        "#E4572E",
-        "#17BEBB",
-        "#2E2A32"
-      ],
-      "comp": "大色块分割，图形居中，边缘硬朗",
-      "u": "活动海报、乐队、潮流品牌",
-      "w": "不写 registration offset 就没有印刷味；颜色必须少",
-      "m": "Seedream / MJ v7 / GPT-Image"
-    },
-    {
-      "id": "S60",
-      "n": "Minimal Geometric",
-      "z": "极简几何海报",
-      "c": "扁平",
-      "s": 5,
-      "ae": "minimal geometric poster, one dominant shape, huge negative space, two-color plus single accent, precise grid alignment, Swiss typographic discipline",
-      "az": "极简几何海报，一个主导形状，巨大负空间，双色加一个点缀色，精确网格对齐，瑞士排版纪律",
-      "p": [
-        "#FAFAF7",
-        "#1A1A1A",
-        "#E63946",
-        "#F4D35E"
-      ],
-      "comp": "中心或黄金分割位，四周大片留白",
-      "u": "品牌、展览、高端活动",
-      "w": "最容易出得空洞；必须强调 grid alignment 与 single accent",
-      "m": "MJ v7 / GPT-Image / Nano Banana"
-    },
-    {
-      "id": "S61",
-      "n": "Duotone Silhouette",
-      "z": "双色剪影",
-      "c": "扁平",
-      "s": 4,
-      "ae": "duotone silhouette, subject rendered as one solid shape, extreme negative space, smooth gradient background sweep, no internal detail inside the silhouette",
-      "az": "双色剪影，主体为单色实心形，巨大负空间，背景平滑渐变，剪影内部无任何细节",
-      "p": [
-        "#12100E",
-        "#F2E9DC",
-        "#C75B39",
-        "#3D5A80"
-      ],
-      "comp": "主体贴边或压在三分线，背景大面积渐变",
-      "u": "人物号、观点输出、极简封面",
-      "w": "剪影里一旦有细节就毁；必须写 no internal detail",
-      "m": "MJ v7 / GPT-Image"
-    },
-    {
-      "id": "S62",
-      "z": "清单大字",
-      "n": "Big Type List Cover",
-      "c": "图文版式",
-      "s": 4,
-      "az": "纯色或极浅渐变背景，画面被一条水平线分成上下两块，上块完全空白，下块只有一个极简的主视觉物件",
-      "ae": "flat solid background split by one horizontal line, empty upper block, single minimal object in lower block, generous negative space, no texture",
-      "p": [
-        "#F7F3EC",
-        "#E8DFD2",
-        "#1F1D1B",
-        "#D9622B"
-      ],
-      "comp": "画面被水平线分成上下两块，上半区完全留空（约占 45%），下半区只放一个极简物件，四边留出均匀白边",
-      "u": "工具合集、步骤教程、知识总结类封面",
-      "w": "模型爱把装饰铺满整张——必须写明上半区完全留空；也不能画成海报，它就是一张干净的底，字是后加的",
-      "m": "nano-banana / gpt-image"
-    },
-    {
-      "id": "S63",
-      "z": "手绘便签",
-      "n": "Sticky Note Doodle",
-      "c": "图文版式",
-      "s": 3,
-      "az": "米白纸张底，几张圆角便签斜着叠放，边缘贴一段半透明胶带，旁边散落手绘箭头和小涂鸦",
-      "ae": "cream paper background, a few rounded sticky notes stacked at slight angles, a strip of translucent washi tape, hand-drawn arrows and tiny doodles scattered around, soft drop shadows",
-      "p": [
-        "#FBF6EA",
-        "#F2C94C",
-        "#F7A8B8",
-        "#7FB8A4",
-        "#3D3A35"
-      ],
-      "comp": "便签集中在中部偏右，左侧和上方留出整片干净纸面，便签之间错落叠压、投影很淡",
-      "u": "学习笔记、入门教程、手账风产品种草",
-      "w": "便签上会被模型自动补字——一定要在负面里强调表面是纯色纸；涂鸦别超过 5 个，多了就脏",
-      "m": "nano-banana / gpt-image"
-    },
-    {
-      "id": "S64",
-      "z": "备忘录界面",
-      "n": "Notes App Screen",
-      "c": "图文版式",
-      "s": 4,
-      "az": "浅黄色纸张质感，顶部一条细分隔线，正文区是等宽排版的短横线占位块，整体像手机备忘录截图",
-      "ae": "pale yellow paper texture, thin divider line at top, monospaced placeholder lines in body area, flat UI screenshot feel, no device frame",
-      "p": [
-        "#FDF6D8",
-        "#F5E9B8",
-        "#8A7F55",
-        "#FFFFFF"
-      ],
-      "comp": "整张就是一块纸面，顶部 12% 是标题带，正文区排着若干条短横线占位块，四周留白均匀",
-      "u": "经验分享、避坑清单、口播稿截图感",
-      "w": "横线占位块是示意，不是真字——模型会把它们画成乱码字符，负面里必须压掉；不要画手机外框",
-      "m": "gpt-image"
-    },
-    {
-      "id": "S65",
-      "z": "聊天记录",
-      "n": "Chat Bubbles",
-      "c": "图文版式",
-      "s": 4,
-      "az": "纯色背景上悬浮两组对话气泡，左灰右绿，气泡里只有色块占位，没有真文字，气泡带圆角和小尾巴",
-      "ae": "flat background with two groups of floating chat bubbles, light grey on the left and mint green on the right, rounded corners with small tails, empty placeholder blocks inside, soft shadow",
-      "p": [
-        "#EDEDED",
-        "#FFFFFF",
-        "#95EC69",
-        "#2B2B2B"
-      ],
-      "comp": "气泡从左上到右下斜着排开，四周留出大片纯色背景，气泡之间留呼吸间距",
-      "u": "对话体干货、案例复盘、观点对撞",
-      "w": "气泡里会被塞满乱码字——必须写气泡内是空白色块；气泡别超过 5 个，多了就乱",
-      "m": "gpt-image"
-    },
-    {
-      "id": "S66",
-      "z": "左右对比",
-      "n": "Split Comparison",
-      "c": "图文版式",
-      "s": 3,
-      "az": "画面正中被一条细线竖直切开，左半边冷灰调、右半边暖亮调，两侧各有一个同构的极简主体",
-      "ae": "canvas split vertically by a thin line, cold grey palette on the left half, warm bright palette on the right half, one minimal subject mirrored on each side, flat lighting",
-      "p": [
-        "#D9DEE3",
-        "#8FA3B0",
-        "#FFE9C7",
-        "#F2994A"
-      ],
-      "comp": "正中竖线一分为二，两侧主体同位置同大小，各自在角上留出干净空白",
-      "u": "前后对比、错误vs正确、痛点vs爽点",
-      "w": "两侧必须同构，否则看着不像对比；模型容易把两边画成两张不同的画，要强调 mirrored composition",
-      "m": "nano-banana"
-    },
-    {
-      "id": "S67",
-      "z": "数字清单",
-      "n": "Numbered List",
-      "c": "图文版式",
-      "s": 3,
-      "az": "浅色背景上竖排四个超大阿拉伯数字色块，每个数字右侧跟一条短横线占位，数字是主体",
-      "ae": "light background, four oversized numerals stacked vertically as color blocks, a short placeholder bar to the right of each numeral, numerals as the hero, flat design",
-      "p": [
-        "#FFFFFF",
-        "#111111",
-        "#FF5A5F",
-        "#2D9CDB",
-        "#F2C94C"
-      ],
-      "comp": "数字竖排占画面中间 70%，左右两侧留出窄边，底部留出一条干净横带",
-      "u": "步骤拆解、排行榜、干货清单",
-      "w": "数字是唯一允许出现的字符——但模型会把右侧占位条也画成乱码，要写明占位条是纯色矩形",
-      "m": "gpt-image"
-    },
-    {
-      "id": "S68",
-      "z": "拍立得拼贴",
-      "n": "Polaroid Collage",
-      "c": "图文版式",
-      "s": 4,
-      "az": "米色桌面上斜放着三张白色边框的拍立得相纸，互相叠压，边角贴纸胶带，投影柔和",
-      "ae": "beige tabletop, three polaroid prints with thick white borders overlapping at angles, washi tape on corners, soft natural shadows, film grain",
-      "p": [
-        "#EFE7DA",
-        "#FFFFFF",
-        "#C9B79C",
-        "#8E7C68"
-      ],
-      "comp": "三张相纸错落叠在画面中部，四周露出桌面，右上角留出整块干净区域",
-      "u": "旅行、穿搭、好物、生活记录",
-      "w": "相纸白边里会被补字——强调白色边框是纯白的、没有印刷内容；三张足够，五张就糊",
-      "m": "nano-banana"
-    },
-    {
-      "id": "S69",
-      "z": "知识卡片",
-      "n": "Knowledge Card",
-      "c": "图文版式",
-      "s": 3,
-      "az": "浅灰背景正中一张大圆角白卡，卡内顶部一个圆形图标、中部三条圆角横条占位、右下角一个小色块编号",
-      "ae": "light grey background, one large rounded white card centered, a circular icon at the card top, three rounded placeholder bars in the middle, a small color chip at the bottom right, soft shadow",
-      "p": [
-        "#F5F5F7",
-        "#FFFFFF",
-        "#4A90D9",
-        "#F5A623"
-      ],
-      "comp": "白卡占画面 68%，居中，四周留均匀灰边，卡内元素之间留足呼吸空间",
-      "u": "干货卡片、方法论拆解、系列图统一视觉",
-      "w": "卡内横条是示意不是字；别加多余插图，一张卡只讲一件事",
-      "m": "gpt-image"
-    },
-    {
-      "id": "S70",
-      "z": "环形标注",
-      "n": "Radial Callout",
-      "c": "图文版式",
-      "s": 3,
-      "az": "中心一个极简主体，四周环绕细线引出的圆形节点，节点内是纯色小圆点，整体像科普信息图的骨架",
-      "ae": "one minimal subject at center, thin radial lines leading to circular nodes around it, each node holding a small solid dot, clean infographic skeleton, white background",
-      "p": [
-        "#FFFFFF",
-        "#1A1A1A",
-        "#E85D4A",
-        "#3E7CB1"
-      ],
-      "comp": "主体在正中占 30%，环形节点均匀分布在外圈，节点之间留大片空白",
-      "u": "原理科普、结构拆解、产品卖点",
-      "w": "节点内会被补字——写明节点是纯色圆点；引线要细，粗了就变成箭头图",
-      "m": "gpt-image"
-    },
-    {
-      "id": "S71",
-      "z": "实景涂鸦",
-      "n": "Photo Doodle Overlay",
-      "c": "图文版式",
-      "s": 4,
-      "az": "真实场景照片上叠加白色手绘线条，圈出重点、拉出箭头、画几个小星星和波浪线，像用马克笔在照片上标注",
-      "ae": "real photograph with white hand-drawn marker annotations on top, circles around key areas, arrows, small stars and squiggles, slightly imperfect strokes",
-      "p": [
-        "#7A6A58",
-        "#FFFFFF",
-        "#FFD84D"
-      ],
-      "comp": "照片占满画面，手绘标注集中在主体周围，画面上方或一角留出没有标注的干净区域",
-      "u": "产品实拍标注、教程步骤、探店",
-      "w": "手绘线条要少而准，超过 6 处就成涂鸦墙；线条不能写字，只能是圈、箭头、波浪",
-      "m": "nano-banana"
-    },
-    {
-      "id": "S72",
-      "z": "九宫格拼图",
-      "n": "Grid Collage",
-      "c": "图文版式",
-      "s": 3,
-      "az": "画面被等分成九个方格，格与格之间 6px 白缝，每格是一块纯色或极简图形，整体像相册缩略墙",
-      "ae": "canvas evenly divided into nine tiles with thin white gutters, each tile a flat color or a single minimal shape, clean grid, no border radius",
-      "p": [
-        "#FFFFFF",
-        "#F2B5A7",
-        "#A8C8C0",
-        "#F5E6A8",
-        "#8E9AAF"
-      ],
-      "comp": "严格九宫格等分，白缝均匀，视觉重心可以放在中心格",
-      "u": "合集、多图预告、清单九图",
-      "w": "格子必须严格等大，模型爱画出大小不一；别在格子里放细节，一格一个色块就够",
-      "m": "gpt-image"
-    },
-    {
-      "id": "S73",
-      "z": "酸性设计",
-      "n": "Acid Graphic",
-      "c": "编辑设计",
-      "s": 4,
-      "az": "高饱和荧光渐变背景，扭曲的液态金属立体形，细密网格线叠加，整体刺眼又前卫",
-      "ae": "high saturation fluorescent gradient background, twisted liquid chrome 3D shapes, fine grid lines overlaid, acid graphic style, chrome reflections, high contrast",
-      "p": [
-        "#C6FF00",
-        "#FF00A8",
-        "#00E5FF",
-        "#0A0A0A"
-      ],
-      "comp": "主体立体形居中偏下，背景渐变压满，网格线极淡地铺一层，四周留出暗角",
-      "u": "潮牌、音乐、年轻化活动",
-      "w": "荧光色一多就脏——只留两个荧光加一个黑；网格线要压到 20% 透明度，否则抢戏",
-      "m": "seedream / mj"
-    },
-    {
-      "id": "S74",
-      "z": "瑞士国际主义",
-      "n": "Swiss International",
-      "c": "编辑设计",
-      "s": 4,
-      "az": "纯白背景，严格网格对齐的几何色块与细线，无衬线黑体感，大量留白，冷静克制",
-      "ae": "pure white background, strictly grid-aligned geometric color blocks and hairlines, grotesque sans-serif sensibility, massive negative space, restrained and clinical",
-      "p": [
-        "#FFFFFF",
-        "#111111",
-        "#E63946",
-        "#457B9D"
-      ],
-      "comp": "以 12 栏网格为骨架，色块只占其中几栏，其余全部留白，视觉重量压在左下或右上",
-      "u": "品牌、B端、严肃内容、高端感",
-      "w": "留白必须真的空，模型会忍不住加细节；颜色只用一到两个，多一个就俗",
-      "m": "mj / gpt-image"
-    },
-    {
-      "id": "S75",
-      "z": "包豪斯几何",
-      "n": "Bauhaus Geometry",
-      "c": "编辑设计",
-      "s": 5,
-      "az": "红黄蓝三原色加黑，圆形三角形矩形互相咬合，平涂无渐变，构图严谨",
-      "ae": "primary red yellow blue plus black, interlocking circles triangles and rectangles, flat color without gradients, bauhaus poster composition, geometric precision",
-      "p": [
-        "#D62828",
-        "#F7B801",
-        "#1D3557",
-        "#111111",
-        "#F1FAEE"
-      ],
-      "comp": "基本形沿对角线或中心轴咬合，色块之间留 2~3 处干净缝隙，底部留一条横带",
-      "u": "文化、设计、教育、海报感强的封面",
-      "w": "绝对不能有渐变和投影，一有就变塑料；三原色比例失衡会土，主色占 60% 才稳",
-      "m": "mj / gpt-image"
-    },
-    {
-      "id": "S76",
-      "z": "双色调",
-      "n": "Duotone",
-      "c": "编辑设计",
-      "s": 5,
-      "az": "整幅只用两种颜色套印，暗部一色亮部一色，中间调由网点过渡，像老式印刷",
-      "ae": "two-color duotone print, shadows in one hue and highlights in another, halftone dots in the midtones, silkscreen printing feel, no full color",
-      "p": [
-        "#0B1D3A",
-        "#F25F5C",
-        "#F6F7EB"
-      ],
-      "comp": "主体剪影化处理，占到画面 70%，背景纯色，边缘留出窄白边",
-      "u": "情绪类、人物、书影音、高级感封面",
-      "w": "一定要「只有两个颜色」，模型会偷偷加第三色；网点要细，粗了像旧报纸",
-      "m": "mj / seedream"
-    },
-    {
-      "id": "S77",
-      "z": "莫兰迪灰调",
-      "n": "Morandi Muted",
-      "c": "编辑设计",
-      "s": 5,
-      "az": "低饱和灰粉灰绿灰蓝堆叠，柔光，没有纯黑纯白，整体像蒙了一层灰雾",
-      "ae": "desaturated dusty pink sage and slate blue layered together, soft diffused light, no pure black or pure white, muted film grade, gentle contrast",
-      "p": [
-        "#C9BDB4",
-        "#A8B5A2",
-        "#8E9BAE",
-        "#E5DED6"
-      ],
-      "comp": "大面积色块平铺，主体占比小、位置偏一侧，另一侧留整片灰调空白",
-      "u": "生活方式、家居、护肤、文艺内容",
-      "w": "最怕被模型加饱和度——必须写 no pure black or pure white；颜色超过四种就乱",
-      "m": "seedream / mj"
-    },
-    {
-      "id": "S78",
-      "z": "多巴胺撞色",
-      "n": "Dopamine Color Block",
-      "c": "编辑设计",
-      "s": 4,
-      "az": "高饱和的橙粉黄蓝四色大色块硬边拼接，明快刺眼，没有渐变没有阴影",
-      "ae": "large hard-edged color blocks in saturated orange pink yellow and blue, flat fill, no gradient no shadow, playful and loud, crisp edges",
-      "p": [
-        "#FF6B35",
-        "#FF3E8E",
-        "#FFD23F",
-        "#3B8BD4"
-      ],
-      "comp": "色块按几何形状拼贴占满画面，交界处留细白缝，中部可以留一块纯色当视觉落点",
-      "u": "年轻向、活动、促销、情绪内容",
-      "w": "撞色不等于乱配色——最多四色且要有一个主角占 50%；别加描边，一加就变儿童画",
-      "m": "mj"
-    },
-    {
-      "id": "S79",
-      "z": "奶油风",
-      "n": "Creamy Soft",
-      "c": "编辑设计",
-      "s": 4,
-      "az": "米白奶油底色，圆润的软几何体，柔光打在正面，边缘有一点点暖色反光，安静柔软",
-      "ae": "creamy off-white base, rounded soft geometric volumes, frontal soft light, faint warm bounce on edges, matte surface, extremely gentle contrast",
-      "p": [
-        "#FBF3E9",
-        "#F0DCC4",
-        "#E0BFA0",
-        "#C89B76"
-      ],
-      "comp": "主体偏右下，左上方留出整片奶油色空白，投影极淡且柔和",
-      "u": "母婴、家居、烘焙、温柔系内容",
-      "w": "容易糊成一片——必须给一点明暗对比，但要写 no hard shadow；别加高光，一加就油",
-      "m": "seedream / nano-banana"
-    },
-    {
-      "id": "S80",
-      "z": "复古胶片",
-      "n": "Vintage Film",
-      "c": "编辑设计",
-      "s": 4,
-      "az": "明显颗粒感，略微褪色的暖调，四角暗角，右上角有一道极淡的漏光",
-      "ae": "visible film grain, slightly faded warm grade, heavy vignette, faint light leak in the top right corner, 35mm analog feel, soft halation",
-      "p": [
-        "#B08968",
-        "#E6D5B8",
-        "#5C4033",
-        "#F1E9DA"
-      ],
-      "comp": "主体居中略偏左，暗角吃掉四边，漏光只占右上角一小块",
-      "u": "怀旧、旅行、生活方式、个人故事",
-      "w": "颗粒要细密均匀，粗了就成噪点图；漏光别超过画面 8%，多了像曝光失误",
-      "m": "seedream / mj"
-    },
-    {
-      "id": "S81",
-      "z": "手绘信息图",
-      "n": "Sketch Notes",
-      "c": "编辑设计",
-      "s": 4,
-      "az": "暖米色纸底，黑色手绘细线勾出圆角分区框，框内是柔和的粉彩色块，散布很小的手绘图标",
-      "ae": "warm cream paper, black hand-drawn thin lines forming rounded section boxes, soft pastel color blocks inside, tiny hand-drawn icons scattered, sketch-notes infographic, neat handwriting feel without any letters",
-      "p": [
-        "#FAF3E0",
-        "#2B2B2B",
-        "#F4C7C3",
-        "#B5D8CC",
-        "#F7E1A0"
-      ],
-      "comp": "画面被手绘框分成 3~4 个区块，区块之间留手绘虚线间隔，四周留出纸边",
-      "u": "知识科普、方法论、课程笔记、干货长图",
-      "w": "最容易翻车的一类：模型会往框里塞乱码字——必须写明框内是纯色块；线条要细，粗了就变漫画",
-      "m": "nano-banana / gpt-image"
-    }
-  ]
+ "version": "1.0.0",
+ "note": "真源文件。新增/修改风格只改这里，forge.mjs 与 SKILL.md 都以本文件为准。s=信号强度1-5（模型对该词的响应确定性），ae=英文锚点，az=中文锚点，p=色板，w=雷区。｜2026-11-06 增补 20 条：二次元细分与近期画风（S42–S61） | 2026-11-06 追加图文版式与编辑设计 20 条",
+ "styles": [
+  {
+   "id": "S01",
+   "n": "Hyperreal Photography",
+   "z": "超写实摄影",
+   "c": "写实",
+   "s": 5,
+   "ae": "hyperrealistic photography, 85mm f/1.4 shallow depth of field, visible skin pores and fabric weave, softbox side light with subtle rim light, neutral color grade, medium close-up",
+   "az": "超写实摄影，85mm f/1.4 浅景深，可见皮肤毛孔与织物纹理，侧向柔光箱加微弱轮廓光，中性调色，中近景",
+   "p": [
+    "#0E0E10",
+    "#C9A227",
+    "#E8E2D6"
+   ],
+   "comp": "中近景，中心或三分构图，背景压暗",
+   "u": "高端品牌、人物背书、严肃内容封面",
+   "w": "别叠 cinematic / 8k / hyper detailed，会出塑料假皮；别让模型画手部细节特写",
+   "m": "MJ v7 / 即梦4 / Nano Banana"
+  },
+  {
+   "id": "S02",
+   "n": "Film Photography",
+   "z": "胶片摄影",
+   "c": "写实",
+   "s": 4,
+   "ae": "shot on Kodak Portra 400, 35mm film grain, halation around highlights, slightly lifted blacks, warm skin tones, natural window light, candid framing",
+   "az": "柯达 Portra 400 胶片质感，35mm 颗粒，高光晕染，黑位微微抬起，暖肤色，自然窗光，抓拍构图",
+   "p": [
+    "#D8C3A5",
+    "#8C6B4F",
+    "#3B322C"
+   ],
+   "comp": "平视抓拍，允许轻微失焦与过曝，画面不必干净",
+   "u": "生活方式、文艺、怀旧叙事、人物故事",
+   "w": "写 film grain 时不要同时写 sharp focus / high clarity，两者互斥",
+   "m": "MJ v7 / Flux / 即梦4"
+  },
+  {
+   "id": "S03",
+   "n": "Documentary Street",
+   "z": "纪实街拍",
+   "c": "写实",
+   "s": 3,
+   "ae": "documentary street photography, 28mm wide angle, harsh afternoon sun, deep shadows, unposed subjects, muted contrast, urban concrete texture",
+   "az": "纪实街拍，28mm 广角，午后硬光，深阴影，非摆拍人物，低反差，城市水泥肌理",
+   "p": [
+    "#2B2B2B",
+    "#A8A29E",
+    "#E4DCCF"
+   ],
+   "comp": "广角贴脸、前景遮挡、非对称构图，容忍杂乱",
+   "u": "社会观察、真实感种草、城市内容",
+   "w": "要写 unposed；否则模型自动让人物看镜头微笑，纪实感全失",
+   "m": "MJ v7 / Flux"
+  },
+  {
+   "id": "S04",
+   "n": "Studio Commercial",
+   "z": "商业棚拍",
+   "c": "写实",
+   "s": 4,
+   "ae": "commercial studio product photography, seamless background, large softbox key light plus gradient falloff, crisp specular highlight, reflection floor, 100mm macro",
+   "az": "商业棚拍产品摄影，无缝背景，大柔光箱主光加渐变压暗，清晰高光，反光地面，100mm 微距",
+   "p": [
+    "#F5F3EF",
+    "#111111",
+    "#B08D57"
+   ],
+   "comp": "正中对称或对角线摆放，四周大量留白",
+   "u": "电商主图、产品带货、品牌 KV",
+   "w": "产品文字/logo 模型会画错，出图后必须后期贴真实包装",
+   "m": "MJ v7 / 即梦4 / Seedream"
+  },
+  {
+   "id": "S05",
+   "n": "Flat Vector Illustration",
+   "z": "扁平矢量插画",
+   "c": "扁平",
+   "s": 5,
+   "ae": "flat vector illustration, solid shapes, no gradients, limited 4-color palette, clean rounded silhouettes, editorial style, generous negative space",
+   "az": "扁平矢量插画，纯色块，无渐变，四色限定，圆润干净轮廓，编辑插画风，大量留白",
+   "p": [
+    "#1B3A6B",
+    "#F2673A",
+    "#F5E1C8",
+    "#2E7D6F"
+   ],
+   "comp": "单中心主体 + 大留白，人物可无五官保持通用",
+   "u": "科技、互联网、商务、公众号内文图",
+   "w": "别写 3d / shadow / texture，一加就不平了；四色以上会脏",
+   "m": "MJ v7 / Flux / 即梦4"
+  },
+  {
+   "id": "S06",
+   "n": "Isometric 2.5D",
+   "z": "等距 2.5D",
+   "c": "扁平",
+   "s": 4,
+   "ae": "isometric 2.5D illustration, 30-degree axonometric projection, floating platforms, soft ambient occlusion shadows, pastel scheme, tiny human figures for scale",
+   "az": "等距 2.5D 插画，30 度轴测投影，悬浮平台，柔和环境光遮蔽阴影，马卡龙配色，微小人物作比例参照",
+   "p": [
+    "#7FB3D5",
+    "#F7DC6F",
+    "#F5B7B1",
+    "#2C3E50"
+   ],
+   "comp": "俯视 45 度，模块化堆叠，中轴留一条竖向空白",
+   "u": "SaaS 产品说明、流程图、架构示意",
+   "w": "不写 axonometric 会变成普通俯视图；元素超过 6 个会糊成一团",
+   "m": "MJ v7 / 即梦4 / Seedream"
+  },
+  {
+   "id": "S07",
+   "n": "MBE Style",
+   "z": "MBE 描边风",
+   "c": "扁平",
+   "s": 3,
+   "ae": "MBE style illustration, thick uniform outlines, offset solid shadows, bright candy colors, playful rounded icons, white background",
+   "az": "MBE 风格插画，等粗粗描边，错位纯色投影，糖果亮色，俏皮圆润图标，白底",
+   "p": [
+    "#FFFFFF",
+    "#FF6B6B",
+    "#4ECDC4",
+    "#FFE66D"
+   ],
+   "comp": "散点式平铺图标，白底无透视",
+   "u": "互联网早期风、教育、活动页、图标组",
+   "w": "风格偏旧，用在 2026 年品牌稿会显廉价；只适合做图标/装饰",
+   "m": "MJ v7 / Flux"
+  },
+  {
+   "id": "S08",
+   "n": "Geometric Abstraction",
+   "z": "几何抽象",
+   "c": "扁平",
+   "s": 4,
+   "ae": "geometric abstract composition, bauhaus grid, circles and arcs and rectangles, precise alignment, flat primary colors, risograph-like overlap",
+   "az": "几何抽象构成，包豪斯网格，圆形弧线矩形，精确对齐，纯色三原色，叠印透色",
+   "p": [
+    "#E63946",
+    "#1D3557",
+    "#F1FAEE",
+    "#FFB703"
+   ],
+   "comp": "严格网格或对角线，不对称平衡，可裁切",
+   "u": "品牌底纹、科技背景、活动主视觉",
+   "w": "写 abstract 容易出无意义涂鸦，必须给 bauhaus grid 或 alignment 约束",
+   "m": "MJ v7 / Flux / SDXL"
+  },
+  {
+   "id": "S09",
+   "n": "Watercolor",
+   "z": "水彩",
+   "c": "手绘",
+   "s": 5,
+   "ae": "watercolor illustration, wet-on-wet bleeding edges, granulating pigment, visible cold-press paper texture, transparent washes, white paper reserved highlights",
+   "az": "水彩插画，湿画法晕开的边缘，颗粒沉淀，可见冷压纸纹，透明罩染，留白高光",
+   "p": [
+    "#A8C0D8",
+    "#E8B4A0",
+    "#F2EBDD",
+    "#6B8E8A"
+   ],
+   "comp": "松边构图，主体可溢出边缘，大面积纸白当留白",
+   "u": "文艺、教育、母婴、生活方式",
+   "w": "不写 paper texture 会变成塑料平涂；别写 sharp / crisp",
+   "m": "MJ v7 / Flux / 即梦4"
+  },
+  {
+   "id": "S10",
+   "n": "Pencil Sketch",
+   "z": "铅笔素描",
+   "c": "手绘",
+   "s": 5,
+   "ae": "graphite pencil sketch, cross-hatching shading, visible pencil strokes, smudged graphite, rough sketch paper, monochrome",
+   "az": "石墨铅笔素描，交叉排线，可见笔触，擦蹭灰调，粗纹素描纸，单色",
+   "p": [
+    "#F4F1EA",
+    "#5A5A5A",
+    "#1A1A1A"
+   ],
+   "comp": "手稿感，允许未完成边缘",
+   "u": "概念稿、手作感、知识图解",
+   "w": "会偏灰，出图后要拉对比；别让模型上色",
+   "m": "MJ v7 / SDXL"
+  },
+  {
+   "id": "S11",
+   "n": "Minimal Line Art",
+   "z": "极简线稿",
+   "c": "手绘",
+   "s": 5,
+   "ae": "minimal single-weight line art, continuous contour drawing, no fill, generous white space, slight hand-drawn wobble, single accent color accent",
+   "az": "极简单线稿，等粗连续轮廓，无填色，大量留白，轻微手抖感，单一强调色点缀",
+   "p": [
+    "#FFFFFF",
+    "#111111",
+    "#FF5A5F"
+   ],
+   "comp": "居中单主体，四周 40% 以上留白",
+   "u": "高端极简、女性向、品牌辅助图形",
+   "w": "线稿细节多会脏；主体最多 2 个",
+   "m": "MJ v7 / Flux / Nano Banana"
+  },
+  {
+   "id": "S12",
+   "n": "Marker Illustration",
+   "z": "马克笔插画",
+   "c": "手绘",
+   "s": 3,
+   "ae": "alcohol marker illustration, visible marker streaks and overlap, saturated bleeding color, white gel pen highlights, sketchbook paper",
+   "az": "酒精马克笔插画，可见笔触条纹与叠色，饱和渗色，白色高光笔点缀，速写本纸",
+   "p": [
+    "#FF9F1C",
+    "#2EC4B6",
+    "#E71D36",
+    "#FDFFFC"
+   ],
+   "comp": "手账式拼贴，主体可偏角",
+   "u": "潮流、街头、年轻向",
+   "w": "颜色超过 4 种会糊；写 streaks 才不像矢量",
+   "m": "MJ v7 / Flux"
+  },
+  {
+   "id": "S13",
+   "n": "Children's Crayon",
+   "z": "童画蜡笔",
+   "c": "手绘",
+   "s": 4,
+   "ae": "children's crayon drawing, waxy uneven strokes, off-register coloring outside the lines, naive perspective, kraft paper background",
+   "az": "儿童蜡笔画，蜡质不均笔触，涂出线外的错位上色，稚拙透视，牛皮纸底",
+   "p": [
+    "#F2C14E",
+    "#F78154",
+    "#4D9078",
+    "#B4436C"
+   ],
+   "comp": "平视稚拙，比例故意不准",
+   "u": "亲子、教育、情感叙事",
+   "w": "太完美就假，必须保留 coloring outside the lines",
+   "m": "MJ v7 / 即梦4"
+  },
+  {
+   "id": "S14",
+   "n": "Chibi",
+   "z": "Q 版 chibi",
+   "c": "卡通",
+   "s": 5,
+   "ae": "chibi character, oversized head one-third body ratio, big glossy eyes, tiny limbs, soft cel shading, pastel background, sticker-like clean outline",
+   "az": "Q 版角色，大头占三分之一，大而亮的眼睛，小短四肢，柔和平涂赛璐璐，马卡龙背景，贴纸般干净描边",
+   "p": [
+    "#FFD9E8",
+    "#A0E7E5",
+    "#FFF6B7",
+    "#3C2F4F"
+   ],
+   "comp": "正面站姿居中，头顶与脚下留白",
+   "u": "萌系、周边、社交头像、带货贴纸",
+   "w": "写 realistic 会毁掉比例；一张图只放 1-2 个角色",
+   "m": "MJ v7 / 即梦4 / Nano Banana"
+  },
+  {
+   "id": "S15",
+   "n": "American Cartoon 90s",
+   "z": "美式卡通",
+   "c": "卡通",
+   "s": 4,
+   "ae": "1990s American cartoon style, thick black outlines, rubber-hose limbs, exaggerated expressions, flat cel colors, halftone dot shading",
+   "az": "90 年代美式卡通，粗黑描边，橡皮管四肢，夸张表情，平涂色块，半调网点阴影",
+   "p": [
+    "#FF3B3B",
+    "#FFD23F",
+    "#3D348B",
+    "#F7F7F7"
+   ],
+   "comp": "动态倾斜构图，动作夸张",
+   "u": "娱乐、梗图、年轻品牌",
+   "w": "别同时写 anime，两种脸型会打架",
+   "m": "MJ v7 / Flux / Nano Banana"
+  },
+  {
+   "id": "S16",
+   "n": "Anime",
+   "z": "日式二次元",
+   "c": "卡通",
+   "s": 5,
+   "ae": "japanese anime illustration, clean lineart, two-tone cel shading, detailed hair strands with rim light, soft bloom, school-uniform or modern outfit, focus on eyes",
+   "az": "日式二次元插画，干净线稿，双色平涂赛璐璐，发丝分层带轮廓光，柔光溢出，制服或现代便装，眼神重点刻画",
+   "p": [
+    "#BFD7FF",
+    "#FFC8DD",
+    "#FFFFFF",
+    "#2B2D42"
+   ],
+   "comp": "胸像或半身，视线朝留白侧",
+   "u": "二次元、游戏宣发、年轻人向",
+   "w": "手指/吉他/武器是崩坏重灾区，避免复杂道具；写 anime 别再加 3d",
+   "m": "MJ niji / 即梦4 / Nano Banana"
+  },
+  {
+   "id": "S17",
+   "n": "Retro Cel Animation",
+   "z": "复古赛璐璐动画",
+   "c": "卡通",
+   "s": 4,
+   "ae": "1980s cel animation still, hand-painted background, slight film grain and dust, muted faded palette, soft vignette, airbrushed gradients",
+   "az": "80 年代赛璐璐动画静帧，手绘背景，轻微胶片颗粒与灰尘，褪色低饱和，柔和暗角，喷笔渐变",
+   "p": [
+    "#6C8EAD",
+    "#D9A5A0",
+    "#F0E2C0",
+    "#3A4453"
+   ],
+   "comp": "横构图宽景，人物在中景",
+   "u": "怀旧、叙事、音乐视觉",
+   "w": "写 digital / clean 会毁掉胶片感",
+   "m": "MJ v7 / Flux"
+  },
+  {
+   "id": "S18",
+   "n": "Designer Toy Vinyl",
+   "z": "搪胶潮玩",
+   "c": "潮玩",
+   "s": 4,
+   "ae": "vinyl designer toy, glossy soft-vinyl surface, matte-vs-gloss material contrast, chunky rounded proportions, studio product lighting, shallow DOF, collectible blind-box aesthetic",
+   "az": "搪胶潮玩公仔，光面软胶质感，哑光与亮面材质对比，敦实圆润比例，棚拍产品光，浅景深，盲盒收藏感",
+   "p": [
+    "#F2B5D4",
+    "#8AC6D1",
+    "#FDF6E3",
+    "#2E2A3B"
+   ],
+   "comp": "正面略仰，单色渐变背景，脚下有接触阴影",
+   "u": "潮牌、带货、年轻向封面",
+   "w": "不写 material contrast 会变成塑料玩具；避免写 Labubu 等具体 IP 名（版权+脸会崩），改用特征描述",
+   "m": "MJ v7 / 即梦4 / Seedream"
+  },
+  {
+   "id": "S19",
+   "n": "Brick-Built",
+   "z": "积木风",
+   "c": "潮玩",
+   "s": 4,
+   "ae": "brick-built toy render, visible stud texture, plastic seam lines, macro lens, colorful modular assembly, clean white backdrop",
+   "az": "积木拼搭渲染，可见凸点纹理，塑料合模线，微距镜头，彩色模块化组装，纯白背景",
+   "p": [
+    "#E63946",
+    "#F1C40F",
+    "#1D3557",
+    "#FFFFFF"
+   ],
+   "comp": "45 度俯视微距，主体占画面 60%",
+   "u": "儿童、教育、创意、产品",
+   "w": "砖块过多会糊；别写 LEGO 品牌名",
+   "m": "MJ v7 / Seedream"
+  },
+  {
+   "id": "S20",
+   "n": "Glossy 3D Blob",
+   "z": "3D 泡泡质感",
+   "c": "潮玩",
+   "s": 4,
+   "ae": "glossy 3D blob shapes, subsurface scattering, iridescent gradient, inflated balloon-like forms, soft studio HDRI, candy pastel palette, octane render look",
+   "az": "3D 泡泡形体，次表面散射，虹彩渐变，充气气球般曲面，柔和 HDRI 影棚光，糖果马卡龙色，Octane 渲染质感",
+   "p": [
+    "#FFB3E6",
+    "#B3E5FF",
+    "#FFF4B3",
+    "#FFFFFF"
+   ],
+   "comp": "悬浮堆叠，居中，背景纯色渐变",
+   "u": "社交封面、活动主视觉、年轻品牌",
+   "w": "写 iridescent 容易过曝成一片白，要配 soft lighting",
+   "m": "MJ v7 / Seedream / Nano Banana"
+  },
+  {
+   "id": "S21",
+   "n": "Ink Wash",
+   "z": "水墨",
+   "c": "国风",
+   "s": 5,
+   "ae": "chinese ink wash painting, xuan paper texture, wet brush diffusion, dry-brush flying white strokes, monochrome with single vermilion seal, large empty space",
+   "az": "中国水墨画，宣纸肌理，湿笔洇散，枯笔飞白，黑白为主加一点朱砂印章，大面积留白",
+   "p": [
+    "#F7F4EC",
+    "#2B2B2B",
+    "#B33A3A"
+   ],
+   "comp": "疏可走马，主体偏一角，留白即气韵",
+   "u": "传统文化、品牌联名、高客单内容",
+   "w": "写 chinese ink 但叠 colorful 会翻车成脏色；别让模型画复杂人物",
+   "m": "MJ v7 / 即梦4"
+  },
+  {
+   "id": "S22",
+   "n": "Gongbi",
+   "z": "工笔重彩",
+   "c": "国风",
+   "s": 4,
+   "ae": "chinese gongbi fine-line painting, precise even contour lines, layered mineral pigment washes, gold leaf accents, silk ground, symmetrical composition",
+   "az": "中国工笔重彩，均匀精细勾线，多层矿物色渲染，金箔点缀，绢本底，对称构图",
+   "p": [
+    "#0F4C5C",
+    "#C9A227",
+    "#E8DCC4",
+    "#7B2D26"
+   ],
+   "comp": "严格对称或居中，边框式构图",
+   "u": "国潮高端、礼盒、文化 IP",
+   "w": "线条密度高，小尺寸会糊，建议 ≥2K 出图",
+   "m": "MJ v7 / 即梦4"
+  },
+  {
+   "id": "S23",
+   "n": "Chinese Cyber 国潮赛博",
+   "z": "国风赛博",
+   "c": "国风",
+   "s": 4,
+   "ae": "chinese cyberpunk, neon-lit hanfu silhouettes, holographic calligraphy, red lanterns against wet neon streets, jade-green and magenta light, misty rooftops",
+   "az": "国风赛博朋克，霓虹下的汉服剪影，全息书法，湿街红灯笼，翠绿与品红光，雾中屋檐",
+   "p": [
+    "#0B0B14",
+    "#E63946",
+    "#2A9D8F",
+    "#F1FAEE"
+   ],
+   "comp": "低角度仰拍，前景灯笼框景，纵向上方留空白",
+   "u": "国潮品牌、游戏、活动主视觉",
+   "w": "汉服细节模型画不准，主体宜剪影或半身；别堆太多元素",
+   "m": "MJ v7 / 即梦4 / Seedream"
+  },
+  {
+   "id": "S24",
+   "n": "Dunhuang Mineral",
+   "z": "敦煌矿物色",
+   "c": "国风",
+   "s": 4,
+   "ae": "dunhuang mural style, malachite green and azurite blue and ochre mineral pigments, weathered flaking texture, flowing ribbon figures, cave wall cracks",
+   "az": "敦煌壁画风，石绿石青赭石矿物色，斑驳剥落肌理，飞天飘带，洞窟墙面裂纹",
+   "p": [
+    "#2E6E5E",
+    "#2C4A7C",
+    "#B5723A",
+    "#D9C9A3"
+   ],
+   "comp": "横向长卷或方幅满构，飘带引导视线",
+   "u": "文化 IP、文旅、高端联名",
+   "w": "颜色偏闷，出图后需提亮；人物五官要模糊处理否则崩",
+   "m": "MJ v7 / 即梦4"
+  },
+  {
+   "id": "S25",
+   "n": "Paper Cut",
+   "z": "剪纸年画",
+   "c": "国风",
+   "s": 4,
+   "ae": "chinese paper-cut art, layered paper with real drop shadows, symmetrical auspicious motifs, vermilion and gold, rough fiber paper edge",
+   "az": "中国剪纸艺术，多层纸张带真实投影，对称吉祥纹样，朱红与金，毛边纸纤维",
+   "p": [
+    "#D62828",
+    "#F77F00",
+    "#FFF3D6",
+    "#003049"
+   ],
+   "comp": "中心对称，纹样填满画面边缘",
+   "u": "节庆、年货、国潮包装",
+   "w": "写 flat 会失去纸层厚度，必须写 drop shadows",
+   "m": "MJ v7 / Seedream"
+  },
+  {
+   "id": "S26",
+   "n": "Mid-Century Poster",
+   "z": "复古海报",
+   "c": "复古",
+   "s": 4,
+   "ae": "mid-century modern poster, screen-printed flat inks, off-register color layers, grainy paper stock, bold geometric shapes, limited retro palette",
+   "az": "中世纪现代海报，丝网印刷平涂油墨，套色轻微错位，粗糙纸品，大胆几何形，限定复古色",
+   "p": [
+    "#E8D5B7",
+    "#D65A31",
+    "#22223B",
+    "#4A4E69"
+   ],
+   "comp": "居中大字位 + 下方图形带，2:3 竖版最佳",
+   "u": "品牌海报、活动、怀旧调性",
+   "w": "小字必崩，文字信息留到后期排版",
+   "m": "MJ v7 / Flux"
+  },
+  {
+   "id": "S27",
+   "n": "Risograph",
+   "z": "Riso 孔版印刷",
+   "c": "复古",
+   "s": 4,
+   "ae": "risograph print, two-color overprint with visible misregistration, coarse ink grain, fluorescent pink and teal, uncoated paper fiber",
+   "az": "Riso 孔版印刷，双色叠印可见错版，粗颗粒油墨，荧光粉与青绿，非涂布纸纤维",
+   "p": [
+    "#FF48B0",
+    "#00A6A6",
+    "#F5F0E1"
+   ],
+   "comp": "满构或大色块切分，错版作为风格",
+   "u": "独立出版、文艺、展陈",
+   "w": "最多 3 色；写 clean vector 会破坏错版感",
+   "m": "MJ v7 / Flux"
+  },
+  {
+   "id": "S28",
+   "n": "Vaporwave VHS",
+   "z": "蒸汽波",
+   "c": "复古",
+   "s": 5,
+   "ae": "vaporwave aesthetic, VHS scanlines and tape noise, chrome gradient text, palm silhouettes, grid horizon, magenta and cyan glow, 80s computer UI fragments",
+   "az": "蒸汽波美学，VHS 扫描线与磁带噪点，镀铬渐变字，棕榈剪影，网格地平线，品红青绿辉光，80 年代电脑界面碎片",
+   "p": [
+    "#FF6AD5",
+    "#8795E8",
+    "#94D0FF",
+    "#1B0033"
+   ],
+   "comp": "地平线居中分割，上方大字下方网格",
+   "u": "亚文化、音乐、Z 世代",
+   "w": "容易廉价，务必加 scanlines 与 tape noise 压住",
+   "m": "MJ v7 / Flux"
+  },
+  {
+   "id": "S29",
+   "n": "Vintage Magazine",
+   "z": "旧画报",
+   "c": "复古",
+   "s": 3,
+   "ae": "1970s vintage magazine editorial, warm faded film, soft focus, mustard and burnt orange, knit textures, relaxed poses, printed paper grain",
+   "az": "70 年代旧画报内页，暖调褪色胶片，柔焦，芥末黄与焦橙，针织质感，松弛姿态，印刷纸纹",
+   "p": [
+    "#C97B3F",
+    "#E8C07D",
+    "#5B4636",
+    "#F2E8D5"
+   ],
+   "comp": "竖版半身，上方留白 20%",
+   "u": "穿搭、怀旧叙事、品牌故事",
+   "w": "柔焦过度会显糊，加一句 controlled soft focus",
+   "m": "MJ v7 / Flux"
+  },
+  {
+   "id": "S30",
+   "n": "Cyberpunk",
+   "z": "赛博朋克",
+   "c": "科技",
+   "s": 5,
+   "ae": "cyberpunk night cityscape, neon signage in magenta and cyan, wet asphalt reflections, volumetric haze, anamorphic lens flare, dystopian high-rise density, 35mm",
+   "az": "赛博朋克夜景城市，品红与青色霓虹招牌，湿沥青倒影，体积雾，宽银幕眩光，反乌托邦高楼密度，35mm",
+   "p": [
+    "#0A0A12",
+    "#FF2E88",
+    "#00E5FF",
+    "#FFD166"
+   ],
+   "comp": "低机位仰拍街道纵深，天空留暗部",
+   "u": "科技、AI、游戏、金融科技",
+   "w": "霓虹词重复 3 次以上糊成粉雾；写 bright / cheerful 会中和暗调",
+   "m": "MJ v7 / 即梦4 / Flux"
+  },
+  {
+   "id": "S31",
+   "n": "Holographic HUD",
+   "z": "全息 HUD",
+   "c": "科技",
+   "s": 4,
+   "ae": "holographic HUD interface overlay, thin cyan wireframe vectors, floating data panels, particle dispersion, dark navy void, depth-of-field bokeh grid",
+   "az": "全息 HUD 界面叠加，青色细线框矢量，浮空数据面板，粒子消散，深海军蓝虚空，景深光斑网格",
+   "p": [
+    "#04121F",
+    "#28E0FF",
+    "#7B61FF",
+    "#E6F7FF"
+   ],
+   "comp": "中心主体 + 环绕 UI 层，四周数据留白",
+   "u": "AI 产品、数据、前沿科技",
+   "w": "HUD 上的假文字会糊，只保留线框与短数字；别让模型写长文案",
+   "m": "MJ v7 / 即梦4 / Nano Banana"
+  },
+  {
+   "id": "S32",
+   "n": "Data Visualization",
+   "z": "数据可视化",
+   "c": "科技",
+   "s": 3,
+   "ae": "abstract data visualization, flowing particle streams, network graph nodes, layered translucent ribbons, cool-to-warm gradient mapping, dark background",
+   "az": "抽象数据可视化，流动粒子流，网络图节点，多层半透明飘带，冷到暖的渐变映射，深色背景",
+   "p": [
+    "#0D1B2A",
+    "#1B998B",
+    "#EDF2F4",
+    "#F46036"
+   ],
+   "comp": "满构流线，中心密度高、边缘稀",
+   "u": "报告封面、白皮书、金融科技",
+   "w": "让它画真实图表必然数据错误；只用示意图，真数据自己画",
+   "m": "MJ v7 / Flux"
+  },
+  {
+   "id": "S33",
+   "n": "Biomechanical",
+   "z": "生物机械",
+   "c": "科技",
+   "s": 4,
+   "ae": "biomechanical fusion, organic muscle fibers interwoven with brushed metal, exposed cable tendons, chrome and oxblood, surgical rim lighting, macro detail",
+   "az": "生物机械融合，有机肌纤维与拉丝金属交织，外露线缆肌腱，铬与牛血红，手术式轮廓光，微距细节",
+   "p": [
+    "#1A1A1D",
+    "#8B0000",
+    "#B8B8B8",
+    "#3D3D3D"
+   ],
+   "comp": "特写局部的有机机械交界，留暗场",
+   "u": "硬核科技、医疗、游戏",
+   "w": "易滑向恐怖血腥，电商/公众号慎用",
+   "m": "MJ v7 / Flux"
+  },
+  {
+   "id": "S34",
+   "n": "Memphis",
+   "z": "孟菲斯",
+   "c": "孟菲斯波普",
+   "s": 5,
+   "ae": "memphis design, 80s postmodern pattern, squiggles and confetti dots and zigzags, clashing bright palette, black outlines on white, playful disorder",
+   "az": "孟菲斯设计，80 年代后现代图案，波浪线与彩纸点与锯齿，撞色亮色，白底黑线，俏皮失序",
+   "p": [
+    "#FF5D8F",
+    "#FFCA3A",
+    "#8AC926",
+    "#1982C4"
+   ],
+   "comp": "散点爆发式布局，中心留白给主体",
+   "u": "年轻化活动、促销、社交封面",
+   "w": "元素过密会像低价海报；主色最多 3 个 + 黑白",
+   "m": "MJ v7 / Nano Banana"
+  },
+  {
+   "id": "S35",
+   "n": "Pop Art",
+   "z": "波普艺术",
+   "c": "孟菲斯波普",
+   "s": 5,
+   "ae": "pop art screen print, ben-day dots, bold black contour, primary colors plus magenta, halftone shading, comic panel framing, repetition grid",
+   "az": "波普艺术丝网印，本戴点，粗黑轮廓，三原色加品红，半调网点阴影，漫画分格边框，重复网格",
+   "p": [
+    "#FFD400",
+    "#FF2D55",
+    "#0057FF",
+    "#111111"
+   ],
+   "comp": "重复分格或单主体居中，高对比",
+   "u": "强冲击封面、话题营销、潮流",
+   "w": "人脸会被风格化到认不出，人物向内容慎用",
+   "m": "MJ v7 / Nano Banana"
+  },
+  {
+   "id": "S36",
+   "n": "Y2K Chrome",
+   "z": "Y2K 千禧",
+   "c": "孟菲斯波普",
+   "s": 4,
+   "ae": "Y2K aesthetic, liquid chrome blobs, star sparkles, translucent bubble plastic, low-rise metallic typography, baby blue and silver, cyber-fairy vibe",
+   "az": "Y2K 美学，液态铬块，星星闪片，半透明泡泡塑料，低腰金属字，婴儿蓝与银，赛博精灵感",
+   "p": [
+    "#C9D6FF",
+    "#E2E2E2",
+    "#FFB6E1",
+    "#4A4AFF"
+   ],
+   "comp": "中心大主体 + 星芒点缀，圆形聚焦",
+   "u": "美妆、时尚、Z 世代活动",
+   "w": "铬反射容易过曝，配 soft studio light",
+   "m": "MJ v7 / Seedream / Nano Banana"
+  },
+  {
+   "id": "S37",
+   "n": "Grain & Noise",
+   "z": "噪点颗粒肌理",
+   "c": "肌理",
+   "s": 3,
+   "ae": "heavy film grain overlay, digital noise texture, slight chromatic aberration, faded contrast curve, dusty light leak, analog imperfection",
+   "az": "重胶片颗粒叠加，数字噪点肌理，轻微色差，褪色对比曲线，灰尘漏光，模拟不完美",
+   "p": [
+    "#D6D2C4",
+    "#7A7265",
+    "#2F2B26"
+   ],
+   "comp": "中性，作为叠加层不改变构图",
+   "u": "文艺、杂志感、任何需要去塑料味的设计",
+   "w": "这是叠加层不是主风格，必须依附在别的风格上",
+   "m": "任意"
+  },
+  {
+   "id": "S38",
+   "n": "Paper Collage",
+   "z": "纸张拼贴",
+   "c": "肌理",
+   "s": 4,
+   "ae": "torn paper collage, layered cut-outs with hard drop shadows, magazine clipping fragments, masking tape, mixed paper textures, slightly misaligned",
+   "az": "撕纸拼贴，多层剪纸带硬投影，杂志剪报碎片，胶带痕迹，混合纸张肌理，轻微错位",
+   "p": [
+    "#EFE6D6",
+    "#C1473B",
+    "#2F4858",
+    "#E4B363"
+   ],
+   "comp": "层叠错落，边缘可出画",
+   "u": "独立杂志、手作感、观点类内容",
+   "w": "层数过多会脏，控制在 5 层内",
+   "m": "MJ v7 / Flux"
+  },
+  {
+   "id": "S39",
+   "n": "Halftone",
+   "z": "半调网点",
+   "c": "肌理",
+   "s": 4,
+   "ae": "halftone print texture, oversized ben-day dots, CMYK misregistration, newsprint paper, monochrome with one spot color",
+   "az": "半调网点印刷，大号本戴点，CMYK 套印错位，新闻纸，单色加一个专色",
+   "p": [
+    "#F2F2EE",
+    "#1C1C1C",
+    "#E4572E"
+   ],
+   "comp": "大主体 + 网点渐变过渡",
+   "u": "编辑设计、观点、复古科技感",
+   "w": "网点过粗会看不清主体，分层使用",
+   "m": "MJ v7 / Flux"
+  },
+  {
+   "id": "S40",
+   "n": "Clay 3D",
+   "z": "黏土 3D",
+   "c": "商务3D",
+   "s": 4,
+   "ae": "claymorphism 3D render, matte plasticine surface with subtle fingerprints, soft rounded forms, pastel palette, diffuse studio lighting, tiny contact shadows",
+   "az": "黏土拟态 3D 渲染，哑光橡皮泥表面带细微指痕，柔和圆润形体，马卡龙色，漫射棚光，微弱接触阴影",
+   "p": [
+    "#F6D6C9",
+    "#A8DADC",
+    "#F1FAEE",
+    "#457B9D"
+   ],
+   "comp": "悬浮组合，单色渐变背景",
+   "u": "SaaS、教育、亲和力品牌",
+   "w": "写 glossy 会变塑料，黏土必须 matte",
+   "m": "MJ v7 / Seedream"
+  },
+  {
+   "id": "S41",
+   "n": "Glass Liquid",
+   "z": "玻璃液态",
+   "c": "商务3D",
+   "s": 4,
+   "ae": "translucent frosted glass forms, refraction caustics, liquid chrome ribbon, gradient backdrop, sharp specular edges, refractive 3D render",
+   "az": "半透明磨砂玻璃体，折射焦散，液态铬飘带，渐变背景，锐利高光边缘，折射 3D 渲染",
+   "p": [
+    "#0F172A",
+    "#7DD3FC",
+    "#C7D2FE",
+    "#F8FAFC"
+   ],
+   "comp": "中心悬浮，背景纵向渐变",
+   "u": "AI/云服务、发布会、高端品牌",
+   "w": "透明体容易糊成一片，必须给 caustics 与 sharp edges",
+   "m": "MJ v7 / Seedream / Nano Banana"
+  },
+  {
+   "id": "S42",
+   "n": "Makoto Shinkai",
+   "z": "新海诚风",
+   "c": "二次元",
+   "s": 5,
+   "ae": "Makoto Shinkai anime background art, hyper-detailed cloudscape, god rays through cumulus, saturated dusk gradient from violet to gold, lens flare and bokeh, luminous rim light on characters, crisp line art",
+   "az": "新海诚式动画背景，超细云层，积云间穿透的耶稣光，紫到金的黄昏渐变，镜头光晕与散景，角色边缘高光，线条清晰",
+   "p": [
+    "#0B1D3A",
+    "#F5A65B",
+    "#FFD9A0",
+    "#8FD3F4"
+   ],
+   "comp": "低角度，天空占上半幅三分之二，人物小且靠边",
+   "u": "情感向内容、青春题材、音乐封面",
+   "w": "光晕一多就发灰，云必须分层；人物占比过大就失去\"风景感\"",
+   "m": "Seedream / Nano Banana / MJ v7"
+  },
+  {
+   "id": "S43",
+   "n": "Kyoto Animation",
+   "z": "京都动画风",
+   "c": "二次元",
+   "s": 4,
+   "ae": "Kyoto Animation style, soft cel shading with delicate line art, pastel palette, gentle ambient occlusion, subtle bloom, clean uncluttered everyday scene, warm windowsill light",
+   "az": "京都动画式，柔和赛璐璐上色，线条纤细，粉彩配色，轻柔环境光，微弱泛光，干净的日常场景，窗边暖光",
+   "p": [
+    "#FDF6F0",
+    "#F2B5C4",
+    "#8FC1E3",
+    "#4A4A68"
+   ],
+   "comp": "平视或微俯，日常空间，主体偏中但不居中",
+   "u": "生活、治愈、情感、日系品牌",
+   "w": "软光容易糊成一片白，必须保留线条与阴影层次",
+   "m": "Seedream / Nano Banana"
+  },
+  {
+   "id": "S44",
+   "n": "Cel Shading",
+   "z": "赛璐璐平涂",
+   "c": "二次元",
+   "s": 5,
+   "ae": "cel shading, hard-edged shadow blocks, flat two-tone shading with no gradients, bold uniform outlines, anime screencap look, saturated flat colors, simple background",
+   "az": "赛璐璐平涂，硬边阴影块，双色平涂无渐变，粗细一致的轮廓线，动画截帧感，饱和纯色，简单背景",
+   "p": [
+    "#1A1A2E",
+    "#FF6B6B",
+    "#FFD93D",
+    "#4ECDC4"
+   ],
+   "comp": "正面或四分之三侧面，半身，背景留纯色或简单渐变",
+   "u": "头像、表情包、二次元封面",
+   "w": "一旦出现柔光渐变就变成厚涂；轮廓线不统一会显得廉价",
+   "m": "Seedream / Nano Banana / GPT-Image"
+  },
+  {
+   "id": "S45",
+   "n": "Painterly Anime",
+   "z": "厚涂二次元",
+   "c": "二次元",
+   "s": 4,
+   "ae": "thick painterly anime, semi-impasto brushwork, mixed flat and rendered areas, dramatic rim light, dense color blocking, visible stroke direction, dark background",
+   "az": "厚涂二次元，半厚涂笔触，平涂与细化混用，戏剧性边缘光，密集色块，可见笔触方向，深色背景",
+   "p": [
+    "#241E2E",
+    "#C8506E",
+    "#F0A868",
+    "#6C5B7B"
+   ],
+   "comp": "半身特写，四分之三侧脸，背景压暗",
+   "u": "角色立绘、游戏宣传、同人",
+   "w": "厚涂最容易脏，要限定 4 色以内并强调\"visible strokes\"",
+   "m": "Seedream / MJ v7"
+  },
+  {
+   "id": "S46",
+   "n": "Korean Webtoon",
+   "z": "韩系插画",
+   "c": "二次元",
+   "s": 4,
+   "ae": "Korean webtoon illustration, polished rendering, glossy skin highlights, soft gradient shading, stylish modern fashion, clean vector-like edges, studio softbox light",
+   "az": "韩系网漫插画，精细渲染，皮肤高光水润，柔和渐变阴影，时尚现代穿搭，接近矢量的干净边缘，棚拍柔光",
+   "p": [
+    "#F7E9E1",
+    "#D98C8C",
+    "#7A9CC6",
+    "#2E2A33"
+   ],
+   "comp": "竖构图，人物占 60%，背景虚化",
+   "u": "美妆、穿搭、人物号、小红书封面",
+   "w": "肤色容易塑料感，必须写 subsurface 与 subtle texture",
+   "m": "Seedream / Nano Banana / GPT-Image"
+  },
+  {
+   "id": "S47",
+   "n": "Chinese Anime",
+   "z": "国风二次元",
+   "c": "二次元",
+   "s": 4,
+   "ae": "Chinese anime style, ink-wash inspired linework over modern cel shading, hanfu silhouette with flowing sleeves, plum blossom and cloud motifs, muted jade green and vermilion, empty space composition",
+   "az": "国风二次元，水墨感线条叠现代赛璐璐，汉服剪影与飘带，梅花与云纹，克制的青绿与朱红，留白构图",
+   "p": [
+    "#F5F0E6",
+    "#7A9E7E",
+    "#C8553D",
+    "#2B2B2B"
+   ],
+   "comp": "竖构图，人物侧身，大片留白",
+   "u": "国潮品牌、古风内容、文旅",
+   "w": "汉服细节必崩，用剪影与大体块；头饰别写具体形制",
+   "m": "Seedream / 即梦"
+  },
+  {
+   "id": "S48",
+   "n": "Dark Fantasy Anime",
+   "z": "暗黑二次元",
+   "c": "二次元",
+   "s": 4,
+   "ae": "dark fantasy anime, high contrast chiaroscuro, crimson and violet accent light, gothic ornament silhouettes, heavy vignette, moody rim light, desaturated darks",
+   "az": "暗黑幻想二次元，高对比明暗，绯红与紫罗兰点缀光，哥特装饰剪影，重度暗角，阴郁边缘光，去饱和暗部",
+   "p": [
+    "#0A0A0F",
+    "#7B1E3B",
+    "#B08BBB",
+    "#E8E3D9"
+   ],
+   "comp": "低角度仰视，人物居中偏下，背景深渊感",
+   "u": "游戏、小说、悬疑内容",
+   "w": "暗部全黑会丢结构，必须给 rim light；别写 bright",
+   "m": "Seedream / MJ v7"
+  },
+  {
+   "id": "S49",
+   "n": "Pixel Art",
+   "z": "像素风",
+   "c": "二次元",
+   "s": 5,
+   "ae": "pixel art, 32-bit sprite aesthetic, limited 16-color palette, dithering gradients, crisp blocky pixels aligned to grid, isometric game scene, no anti-aliasing",
+   "az": "像素画，32 位精灵美学，16 色限定，抖动过渡，对齐网格的硬像素块，等距游戏场景，无抗锯齿",
+   "p": [
+    "#1B1B2F",
+    "#E94F37",
+    "#F6C453",
+    "#44BBA4"
+   ],
+   "comp": "等距 45 度或正侧视，场景填满画面",
+   "u": "游戏、科技怀旧、独立开发者",
+   "w": "写 realistic 就崩；必须强调 no anti-aliasing 与 limited palette",
+   "m": "Seedream / MJ v7"
+  },
+  {
+   "id": "S50",
+   "n": "American Comic",
+   "z": "美式网漫",
+   "c": "二次元",
+   "s": 4,
+   "ae": "American comic book art, heavy ink outlines, halftone dot shading, dynamic low-angle perspective, bold primary color accents, noir shadow shapes, speed lines",
+   "az": "美式漫画，粗墨线，半调网点阴影，动态低角度透视，强对比原色点缀，黑色电影式阴影块，速度线",
+   "p": [
+    "#111111",
+    "#E63946",
+    "#F1FAEE",
+    "#457B9D"
+   ],
+   "comp": "斜角动态构图，人物占满，背景放射线",
+   "u": "剧情号、观点输出、男性向内容",
+   "w": "网点过密会脏，控制在阴影区；别写 soft light",
+   "m": "Seedream / GPT-Image"
+  },
+  {
+   "id": "S51",
+   "n": "Liquid Chrome",
+   "z": "液态金属",
+   "c": "科技",
+   "s": 4,
+   "ae": "liquid chrome, mercury-like flowing forms, molten metal reflections, high-gloss anamorphic highlights, dark studio backdrop, mirror surface with environment streaks",
+   "az": "液态金属，水银般流动形态，熔融金属反射，高光拉丝，深色棚拍背景，镜面反射环境条纹",
+   "p": [
+    "#0B0B0F",
+    "#C0C6D1",
+    "#8A93A6",
+    "#F2F4F8"
+   ],
+   "comp": "中心悬浮，主体占 50%，四周留暗",
+   "u": "AI、芯片、金融科技、发布会",
+   "w": "不写 environment reflection 就变成塑料球；背景必须暗",
+   "m": "Seedream / MJ v7 / Nano Banana"
+  },
+  {
+   "id": "S52",
+   "n": "Jelly Candy",
+   "z": "果冻糖质感",
+   "c": "潮玩",
+   "s": 4,
+   "ae": "translucent jelly material, glossy syrup surface, subsurface scattering, candy palette, soft specular bloom, soft studio light on seamless backdrop",
+   "az": "半透明果冻材质，糖浆光泽表面，次表面散射，糖果配色，柔和镜面泛光，无缝背景棚光",
+   "p": [
+    "#FFEBF0",
+    "#FF7AA2",
+    "#7BD3EA",
+    "#FFF6A9"
+   ],
+   "comp": "正面平视，主体居中，大量留白",
+   "u": "母婴、美妆、活动物料、小红书",
+   "w": "不写 subsurface scattering 会变成硬塑料;背景一杂就廉价",
+   "m": "Seedream / Nano Banana"
+  },
+  {
+   "id": "S53",
+   "n": "Frosted Glass",
+   "z": "毛玻璃",
+   "c": "肌理",
+   "s": 3,
+   "ae": "frosted glass overlay, heavy gaussian blur bands, fine grain, layered translucent panels, muted duotone, soft edge lighting",
+   "az": "毛玻璃叠加，强高斯模糊带，细颗粒，多层半透明面板，克制双色调，边缘柔光",
+   "p": [
+    "#E8EAED",
+    "#9AA5B1",
+    "#4A5568",
+    "#FFFFFF"
+   ],
+   "comp": "分层叠加，几何切割，留白多于内容",
+   "u": "UI 展示、科技报告、高端商务",
+   "w": "模糊过头就没主体，必须留一块清晰区；不要写 colorful",
+   "m": "Seedream / MJ v7"
+  },
+  {
+   "id": "S54",
+   "n": "CCD Digital",
+   "z": "CCD 数码感",
+   "c": "复古",
+   "s": 4,
+   "ae": "early digital camera look, blown highlights, chromatic aberration on edges, harsh direct on-camera flash, slight motion blur, dated color science, visible sensor noise",
+   "az": "早期数码相机质感，高光溢出，边缘色差，机顶直闪硬光，轻微动态模糊，过时的色彩科学，可见传感器噪点",
+   "p": [
+    "#F2EDE4",
+    "#C9A227",
+    "#3A3A3A",
+    "#8C1C13"
+   ],
+   "comp": "随手拍构图，主体不在中心，边缘裁切",
+   "u": "穿搭、探店、怀旧内容、小红书",
+   "w": "别写 clean / professional；一定要写 on-camera flash 和 noise",
+   "m": "Seedream / Nano Banana"
+  },
+  {
+   "id": "S55",
+   "n": "Lo-fi Illustration",
+   "z": "Lo-fi 复古插画",
+   "c": "复古",
+   "s": 4,
+   "ae": "lo-fi indie illustration, grainy paper texture, muted earth palette, naive simplified shapes, screen-print misregistration, hand-drawn wobbly lines",
+   "az": "Lo-fi 独立插画，颗粒纸质纹理，低饱和土色，稚拙简化造型，丝网印刷错版感，手绘抖动线条",
+   "p": [
+    "#EFE6D8",
+    "#A8756B",
+    "#5B7B7A",
+    "#2F3A40"
+   ],
+   "comp": "平面化构图，元素并置，无透视",
+   "u": "播客封面、独立品牌、文艺内容",
+   "w": "不写 grainy texture 会变成扁平矢量；别追求精细",
+   "m": "Seedream / MJ v7"
+  },
+  {
+   "id": "S56",
+   "n": "Stylized 3D Cartoon",
+   "z": "3D 卡通渲染",
+   "c": "商务3D",
+   "s": 4,
+   "ae": "stylized 3D cartoon render, exaggerated Pixar-like proportions, soft global illumination, rim light, glossy plastic and matte fabric materials, shallow depth of field",
+   "az": "3D 卡通渲染，皮克斯式夸张比例，柔和全局光照，边缘光，亮面塑料与哑光布料对比，浅景深",
+   "p": [
+    "#FFF3E2",
+    "#FF9F5A",
+    "#4FA8D8",
+    "#2D2A32"
+   ],
+   "comp": "正面平视，主体居中，背景纯色渐变",
+   "u": "品牌吉祥物、科普、儿童内容",
+   "w": "不写 material contrast 会像廉价手办；比例要夸张",
+   "m": "Seedream / MJ v7 / Nano Banana"
+  },
+  {
+   "id": "S57",
+   "n": "Plush Knit",
+   "z": "毛绒针织",
+   "c": "潮玩",
+   "s": 4,
+   "ae": "plush knitted wool texture, visible fiber fuzz, soft felt shapes, cozy warm lighting, handcrafted imperfection, macro detail on stitches",
+   "az": "毛绒针织质感，可见纤维绒毛，柔软毡布造型，温暖柔光，手工不完美感，针脚微距细节",
+   "p": [
+    "#F5E6D3",
+    "#E0A899",
+    "#93B5A0",
+    "#6B4F3A"
+   ],
+   "comp": "近景，主体充满画面，背景虚化织物",
+   "u": "母婴、家居、节日营销",
+   "w": "必须写 fiber fuzz，否则变成光滑塑料；光要柔",
+   "m": "Seedream / Nano Banana"
+  },
+  {
+   "id": "S58",
+   "n": "Woodcut Print",
+   "z": "木刻版画",
+   "c": "复古",
+   "s": 4,
+   "ae": "woodcut print, bold gouged line work, high contrast black with one spot color, rough handmade paper texture, folk art energy, visible chisel marks",
+   "az": "木刻版画，粗犷刻刀线条，黑加单色高对比，粗糙手工纸纹，民间艺术气息，可见凿痕",
+   "p": [
+    "#1C1C1C",
+    "#D9C9A3",
+    "#A63A2E",
+    "#F2EAD9"
+   ],
+   "comp": "平面正面，图形化轮廓，不留透视",
+   "u": "文化内容、书籍、非遗、品牌联名",
+   "w": "别写 detail / realistic；线条必须粗且少",
+   "m": "Seedream / MJ v7"
+  },
+  {
+   "id": "S59",
+   "n": "Silkscreen",
+   "z": "丝网印刷",
+   "c": "复古",
+   "s": 4,
+   "ae": "silkscreen print, spot color separation, slight ink bleed, registration offset between layers, flat opaque layers, retro poster aesthetic, uncoated paper grain",
+   "az": "丝网印刷，专色分版，轻微油墨溢出，图层套印偏移，平涂不透明色块，复古海报美学，非涂布纸颗粒",
+   "p": [
+    "#F4F1E8",
+    "#E4572E",
+    "#17BEBB",
+    "#2E2A32"
+   ],
+   "comp": "大色块分割，图形居中，边缘硬朗",
+   "u": "活动海报、乐队、潮流品牌",
+   "w": "不写 registration offset 就没有印刷味；颜色必须少",
+   "m": "Seedream / MJ v7 / GPT-Image"
+  },
+  {
+   "id": "S60",
+   "n": "Minimal Geometric",
+   "z": "极简几何海报",
+   "c": "扁平",
+   "s": 5,
+   "ae": "minimal geometric poster, one dominant shape, huge negative space, two-color plus single accent, precise grid alignment, Swiss typographic discipline",
+   "az": "极简几何海报，一个主导形状，巨大负空间，双色加一个点缀色，精确网格对齐，瑞士排版纪律",
+   "p": [
+    "#FAFAF7",
+    "#1A1A1A",
+    "#E63946",
+    "#F4D35E"
+   ],
+   "comp": "中心或黄金分割位，四周大片留白",
+   "u": "品牌、展览、高端活动",
+   "w": "最容易出得空洞；必须强调 grid alignment 与 single accent",
+   "m": "MJ v7 / GPT-Image / Nano Banana"
+  },
+  {
+   "id": "S61",
+   "n": "Duotone Silhouette",
+   "z": "双色剪影",
+   "c": "扁平",
+   "s": 4,
+   "ae": "duotone silhouette, subject rendered as one solid shape, extreme negative space, smooth gradient background sweep, no internal detail inside the silhouette",
+   "az": "双色剪影，主体为单色实心形，巨大负空间，背景平滑渐变，剪影内部无任何细节",
+   "p": [
+    "#12100E",
+    "#F2E9DC",
+    "#C75B39",
+    "#3D5A80"
+   ],
+   "comp": "主体贴边或压在三分线，背景大面积渐变",
+   "u": "人物号、观点输出、极简封面",
+   "w": "剪影里一旦有细节就毁；必须写 no internal detail",
+   "m": "MJ v7 / GPT-Image"
+  },
+  {
+   "id": "S62",
+   "z": "清单大字",
+   "n": "Big Type List Cover",
+   "c": "图文版式",
+   "s": 4,
+   "az": "纯色或极浅渐变背景，画面被一条水平线分成上下两块，上块完全空白，下块只有一个极简的主视觉物件",
+   "ae": "flat solid background split by one horizontal line, empty upper block, single minimal object in lower block, generous negative space, no texture",
+   "p": [
+    "#F7F3EC",
+    "#E8DFD2",
+    "#1F1D1B",
+    "#D9622B"
+   ],
+   "comp": "画面被水平线分成上下两块，上半区完全留空（约占 45%），下半区只放一个极简物件，四边留出均匀白边",
+   "u": "工具合集、步骤教程、知识总结类封面",
+   "w": "模型爱把装饰铺满整张——必须写明上半区完全留空；也不能画成海报，它就是一张干净的底，字是后加的",
+   "m": "nano-banana / gpt-image"
+  },
+  {
+   "id": "S63",
+   "z": "手绘便签",
+   "n": "Sticky Note Doodle",
+   "c": "图文版式",
+   "s": 3,
+   "az": "米白纸张底，几张圆角便签斜着叠放，边缘贴一段半透明胶带，旁边散落手绘箭头和小涂鸦",
+   "ae": "cream paper background, a few rounded sticky notes stacked at slight angles, a strip of translucent washi tape, hand-drawn arrows and tiny doodles scattered around, soft drop shadows",
+   "p": [
+    "#FBF6EA",
+    "#F2C94C",
+    "#F7A8B8",
+    "#7FB8A4",
+    "#3D3A35"
+   ],
+   "comp": "便签集中在中部偏右，左侧和上方留出整片干净纸面，便签之间错落叠压、投影很淡",
+   "u": "学习笔记、入门教程、手账风产品种草",
+   "w": "便签上会被模型自动补字——一定要在负面里强调表面是纯色纸；涂鸦别超过 5 个，多了就脏",
+   "m": "nano-banana / gpt-image"
+  },
+  {
+   "id": "S64",
+   "z": "备忘录界面",
+   "n": "Notes App Screen",
+   "c": "图文版式",
+   "s": 4,
+   "az": "浅黄色纸张质感，顶部一条细分隔线，正文区是等宽排版的短横线占位块，整体像手机备忘录截图",
+   "ae": "pale yellow paper texture, thin divider line at top, monospaced placeholder lines in body area, flat UI screenshot feel, no device frame",
+   "p": [
+    "#FDF6D8",
+    "#F5E9B8",
+    "#8A7F55",
+    "#FFFFFF"
+   ],
+   "comp": "整张就是一块纸面，顶部 12% 是空白的浅色带，正文区排着若干条短横线占位块，四周留白均匀",
+   "u": "经验分享、避坑清单、口播稿截图感",
+   "w": "横线占位块是示意，不是真字——模型会把它们画成乱码字符，负面里必须压掉；不要画手机外框",
+   "m": "gpt-image"
+  },
+  {
+   "id": "S65",
+   "z": "聊天记录",
+   "n": "Chat Bubbles",
+   "c": "图文版式",
+   "s": 4,
+   "az": "纯色背景上悬浮两组对话气泡，左灰右绿，气泡内部是纯色圆角块，气泡带小尾巴",
+   "ae": "flat background with two groups of floating chat bubbles, light grey on the left and mint green on the right, rounded corners with small tails, empty placeholder blocks inside, soft shadow",
+   "p": [
+    "#EDEDED",
+    "#FFFFFF",
+    "#95EC69",
+    "#2B2B2B"
+   ],
+   "comp": "气泡从左上到右下斜着排开，四周留出大片纯色背景，气泡之间留呼吸间距",
+   "u": "对话体干货、案例复盘、观点对撞",
+   "w": "气泡里会被塞满乱码字——必须写气泡内是空白色块；气泡别超过 5 个，多了就乱",
+   "m": "gpt-image"
+  },
+  {
+   "id": "S66",
+   "z": "左右对比",
+   "n": "Split Comparison",
+   "c": "图文版式",
+   "s": 3,
+   "az": "画面正中被一条细线竖直切开，左半边冷灰调、右半边暖亮调，两侧各有一个同构的极简主体",
+   "ae": "canvas split vertically by a thin line, cold grey palette on the left half, warm bright palette on the right half, one minimal subject mirrored on each side, flat lighting",
+   "p": [
+    "#D9DEE3",
+    "#8FA3B0",
+    "#FFE9C7",
+    "#F2994A"
+   ],
+   "comp": "正中竖线一分为二，两侧主体同位置同大小，各自在角上留出干净空白",
+   "u": "前后对比、错误vs正确、痛点vs爽点",
+   "w": "两侧必须同构，否则看着不像对比；模型容易把两边画成两张不同的画，要强调 mirrored composition",
+   "m": "nano-banana"
+  },
+  {
+   "id": "S67",
+   "z": "数字清单",
+   "n": "Numbered List",
+   "c": "图文版式",
+   "s": 3,
+   "az": "浅色背景上竖排四个超大阿拉伯数字色块，每个数字右侧跟一条短横线占位，数字是主体",
+   "ae": "light background, four oversized numerals stacked vertically as color blocks, a short placeholder bar to the right of each numeral, numerals as the hero, flat design",
+   "p": [
+    "#FFFFFF",
+    "#111111",
+    "#FF5A5F",
+    "#2D9CDB",
+    "#F2C94C"
+   ],
+   "comp": "数字竖排占画面中间 70%，左右两侧留出窄边，底部留出一条干净横带",
+   "u": "步骤拆解、排行榜、干货清单",
+   "w": "数字是唯一允许出现的字符——但模型会把右侧占位条也画成乱码，要写明占位条是纯色矩形",
+   "m": "gpt-image"
+  },
+  {
+   "id": "S68",
+   "z": "拍立得拼贴",
+   "n": "Polaroid Collage",
+   "c": "图文版式",
+   "s": 4,
+   "az": "米色桌面上斜放着三张白色边框的拍立得相纸，互相叠压，边角贴纸胶带，投影柔和",
+   "ae": "beige tabletop, three polaroid prints with thick white borders overlapping at angles, washi tape on corners, soft natural shadows, film grain",
+   "p": [
+    "#EFE7DA",
+    "#FFFFFF",
+    "#C9B79C",
+    "#8E7C68"
+   ],
+   "comp": "三张相纸错落叠在画面中部，四周露出桌面，右上角留出整块干净区域",
+   "u": "旅行、穿搭、好物、生活记录",
+   "w": "相纸白边里会被补字——强调白色边框是纯白的、没有印刷内容；三张足够，五张就糊",
+   "m": "nano-banana"
+  },
+  {
+   "id": "S69",
+   "z": "知识卡片",
+   "n": "Knowledge Card",
+   "c": "图文版式",
+   "s": 3,
+   "az": "浅灰背景正中一张大圆角白卡，卡内顶部一个圆形图标、中部三条圆角横条占位、右下角一个小色块编号",
+   "ae": "light grey background, one large rounded white card centered, a circular icon at the card top, three rounded placeholder bars in the middle, a small color chip at the bottom right, soft shadow",
+   "p": [
+    "#F5F5F7",
+    "#FFFFFF",
+    "#4A90D9",
+    "#F5A623"
+   ],
+   "comp": "白卡占画面 68%，居中，四周留均匀灰边，卡内元素之间留足呼吸空间",
+   "u": "干货卡片、方法论拆解、系列图统一视觉",
+   "w": "卡内横条是示意不是字；别加多余插图，一张卡只讲一件事",
+   "m": "gpt-image"
+  },
+  {
+   "id": "S70",
+   "z": "环形标注",
+   "n": "Radial Callout",
+   "c": "图文版式",
+   "s": 3,
+   "az": "中心一个极简主体，四周环绕细线引出的圆形节点，节点内是纯色小圆点，整体像科普信息图的骨架",
+   "ae": "one minimal subject at center, thin radial lines leading to circular nodes around it, each node holding a small solid dot, clean infographic skeleton, white background",
+   "p": [
+    "#FFFFFF",
+    "#1A1A1A",
+    "#E85D4A",
+    "#3E7CB1"
+   ],
+   "comp": "主体在正中占 30%，环形节点均匀分布在外圈，节点之间留大片空白",
+   "u": "原理科普、结构拆解、产品卖点",
+   "w": "节点内会被补字——写明节点是纯色圆点；引线要细，粗了就变成箭头图",
+   "m": "gpt-image"
+  },
+  {
+   "id": "S71",
+   "z": "实景涂鸦",
+   "n": "Photo Doodle Overlay",
+   "c": "图文版式",
+   "s": 4,
+   "az": "真实场景照片上叠加白色手绘线条，圈出重点、拉出箭头、画几个小星星和波浪线，像用马克笔在照片上标注",
+   "ae": "real photograph with white hand-drawn marker annotations on top, circles around key areas, arrows, small stars and squiggles, slightly imperfect strokes",
+   "p": [
+    "#7A6A58",
+    "#FFFFFF",
+    "#FFD84D"
+   ],
+   "comp": "照片占满画面，手绘标注集中在主体周围，画面上方或一角留出没有标注的干净区域",
+   "u": "产品实拍标注、教程步骤、探店",
+   "w": "手绘线条要少而准，超过 6 处就成涂鸦墙；线条不能写字，只能是圈、箭头、波浪",
+   "m": "nano-banana"
+  },
+  {
+   "id": "S72",
+   "z": "九宫格拼图",
+   "n": "Grid Collage",
+   "c": "图文版式",
+   "s": 3,
+   "az": "画面被等分成九个方格，格与格之间 6px 白缝，每格是一块纯色或极简图形，整体像相册缩略墙",
+   "ae": "canvas evenly divided into nine tiles with thin white gutters, each tile a flat color or a single minimal shape, clean grid, no border radius",
+   "p": [
+    "#FFFFFF",
+    "#F2B5A7",
+    "#A8C8C0",
+    "#F5E6A8",
+    "#8E9AAF"
+   ],
+   "comp": "严格九宫格等分，白缝均匀，视觉重心可以放在中心格",
+   "u": "合集、多图预告、清单九图",
+   "w": "格子必须严格等大，模型爱画出大小不一；别在格子里放细节，一格一个色块就够",
+   "m": "gpt-image"
+  },
+  {
+   "id": "S73",
+   "z": "酸性设计",
+   "n": "Acid Graphic",
+   "c": "编辑设计",
+   "s": 4,
+   "az": "高饱和荧光渐变背景，扭曲的液态金属立体形，细密网格线叠加，整体刺眼又前卫",
+   "ae": "high saturation fluorescent gradient background, twisted liquid chrome 3D shapes, fine grid lines overlaid, acid graphic style, chrome reflections, high contrast",
+   "p": [
+    "#C6FF00",
+    "#FF00A8",
+    "#00E5FF",
+    "#0A0A0A"
+   ],
+   "comp": "主体立体形居中偏下，背景渐变压满，网格线极淡地铺一层，四周留出暗角",
+   "u": "潮牌、音乐、年轻化活动",
+   "w": "荧光色一多就脏——只留两个荧光加一个黑；网格线要压到 20% 透明度，否则抢戏",
+   "m": "seedream / mj"
+  },
+  {
+   "id": "S74",
+   "z": "瑞士国际主义",
+   "n": "Swiss International",
+   "c": "编辑设计",
+   "s": 4,
+   "az": "纯白背景，严格网格对齐的几何色块与细线，无衬线黑体感，大量留白，冷静克制",
+   "ae": "pure white background, strictly grid-aligned geometric color blocks and hairlines, grotesque sans-serif sensibility, massive negative space, restrained and clinical",
+   "p": [
+    "#FFFFFF",
+    "#111111",
+    "#E63946",
+    "#457B9D"
+   ],
+   "comp": "以 12 栏网格为骨架，色块只占其中几栏，其余全部留白，视觉重量压在左下或右上",
+   "u": "品牌、B端、严肃内容、高端感",
+   "w": "留白必须真的空，模型会忍不住加细节；颜色只用一到两个，多一个就俗",
+   "m": "mj / gpt-image"
+  },
+  {
+   "id": "S75",
+   "z": "包豪斯几何",
+   "n": "Bauhaus Geometry",
+   "c": "编辑设计",
+   "s": 5,
+   "az": "红黄蓝三原色加黑，圆形三角形矩形互相咬合，平涂无渐变，构图严谨",
+   "ae": "primary red yellow blue plus black, interlocking circles triangles and rectangles, flat color without gradients, bauhaus poster composition, geometric precision",
+   "p": [
+    "#D62828",
+    "#F7B801",
+    "#1D3557",
+    "#111111",
+    "#F1FAEE"
+   ],
+   "comp": "基本形沿对角线或中心轴咬合，色块之间留 2~3 处干净缝隙，底部留一条横带",
+   "u": "文化、设计、教育、海报感强的封面",
+   "w": "绝对不能有渐变和投影，一有就变塑料；三原色比例失衡会土，主色占 60% 才稳",
+   "m": "mj / gpt-image"
+  },
+  {
+   "id": "S76",
+   "z": "双色调",
+   "n": "Duotone",
+   "c": "编辑设计",
+   "s": 5,
+   "az": "整幅只用两种颜色套印，暗部一色亮部一色，中间调由网点过渡，像老式印刷",
+   "ae": "two-color duotone print, shadows in one hue and highlights in another, halftone dots in the midtones, silkscreen printing feel, no full color",
+   "p": [
+    "#0B1D3A",
+    "#F25F5C",
+    "#F6F7EB"
+   ],
+   "comp": "主体剪影化处理，占到画面 70%，背景纯色，边缘留出窄白边",
+   "u": "情绪类、人物、书影音、高级感封面",
+   "w": "一定要「只有两个颜色」，模型会偷偷加第三色；网点要细，粗了像旧报纸",
+   "m": "mj / seedream"
+  },
+  {
+   "id": "S77",
+   "z": "莫兰迪灰调",
+   "n": "Morandi Muted",
+   "c": "编辑设计",
+   "s": 5,
+   "az": "低饱和灰粉灰绿灰蓝堆叠，柔光，没有纯黑纯白，整体像蒙了一层灰雾",
+   "ae": "desaturated dusty pink sage and slate blue layered together, soft diffused light, no pure black or pure white, muted film grade, gentle contrast",
+   "p": [
+    "#C9BDB4",
+    "#A8B5A2",
+    "#8E9BAE",
+    "#E5DED6"
+   ],
+   "comp": "大面积色块平铺，主体占比小、位置偏一侧，另一侧留整片灰调空白",
+   "u": "生活方式、家居、护肤、文艺内容",
+   "w": "最怕被模型加饱和度——必须写 no pure black or pure white；颜色超过四种就乱",
+   "m": "seedream / mj"
+  },
+  {
+   "id": "S78",
+   "z": "多巴胺撞色",
+   "n": "Dopamine Color Block",
+   "c": "编辑设计",
+   "s": 4,
+   "az": "高饱和的橙粉黄蓝四色大色块硬边拼接，明快刺眼，没有渐变没有阴影",
+   "ae": "large hard-edged color blocks in saturated orange pink yellow and blue, flat fill, no gradient no shadow, playful and loud, crisp edges",
+   "p": [
+    "#FF6B35",
+    "#FF3E8E",
+    "#FFD23F",
+    "#3B8BD4"
+   ],
+   "comp": "色块按几何形状拼贴占满画面，交界处留细白缝，中部可以留一块纯色当视觉落点",
+   "u": "年轻向、活动、促销、情绪内容",
+   "w": "撞色不等于乱配色——最多四色且要有一个主角占 50%；别加描边，一加就变儿童画",
+   "m": "mj"
+  },
+  {
+   "id": "S79",
+   "z": "奶油风",
+   "n": "Creamy Soft",
+   "c": "编辑设计",
+   "s": 4,
+   "az": "米白奶油底色，圆润的软几何体，柔光打在正面，边缘有一点点暖色反光，安静柔软",
+   "ae": "creamy off-white base, rounded soft geometric volumes, frontal soft light, faint warm bounce on edges, matte surface, extremely gentle contrast",
+   "p": [
+    "#FBF3E9",
+    "#F0DCC4",
+    "#E0BFA0",
+    "#C89B76"
+   ],
+   "comp": "主体偏右下，左上方留出整片奶油色空白，投影极淡且柔和",
+   "u": "母婴、家居、烘焙、温柔系内容",
+   "w": "容易糊成一片——必须给一点明暗对比，但要写 no hard shadow；别加高光，一加就油",
+   "m": "seedream / nano-banana"
+  },
+  {
+   "id": "S80",
+   "z": "复古胶片",
+   "n": "Vintage Film",
+   "c": "编辑设计",
+   "s": 4,
+   "az": "明显颗粒感，略微褪色的暖调，四角暗角，右上角有一道极淡的漏光",
+   "ae": "visible film grain, slightly faded warm grade, heavy vignette, faint light leak in the top right corner, 35mm analog feel, soft halation",
+   "p": [
+    "#B08968",
+    "#E6D5B8",
+    "#5C4033",
+    "#F1E9DA"
+   ],
+   "comp": "主体居中略偏左，暗角吃掉四边，漏光只占右上角一小块",
+   "u": "怀旧、旅行、生活方式、个人故事",
+   "w": "颗粒要细密均匀，粗了就成噪点图；漏光别超过画面 8%，多了像曝光失误",
+   "m": "seedream / mj"
+  },
+  {
+   "id": "S81",
+   "z": "手绘信息图",
+   "n": "Sketch Notes",
+   "c": "编辑设计",
+   "s": 4,
+   "az": "暖米色纸底，黑色手绘细线勾出圆角分区框，框内是柔和的粉彩色块，散布很小的手绘图标",
+   "ae": "warm cream paper, black hand-drawn thin lines forming rounded section boxes, soft pastel color blocks inside, tiny hand-drawn icons scattered, sketch-notes infographic, neat handwriting feel without any letters",
+   "p": [
+    "#FAF3E0",
+    "#2B2B2B",
+    "#F4C7C3",
+    "#B5D8CC",
+    "#F7E1A0"
+   ],
+   "comp": "画面被手绘框分成 3~4 个区块，区块之间留手绘虚线间隔，四周留出纸边",
+   "u": "知识科普、方法论、课程笔记、干货长图",
+   "w": "最容易翻车的一类：模型会往框里塞乱码字——必须写明框内是纯色块；线条要细，粗了就变漫画",
+   "m": "nano-banana / gpt-image"
+  },
+  {
+   "id": "S82",
+   "n": "Step Flow",
+   "z": "步骤流程",
+   "c": "信息图",
+   "s": 4,
+   "ae": "horizontal step flow diagram, 3 to 4 numbered nodes connected by arrows, flat isometric icons, generous white space, clean grid",
+   "az": "横向步骤流程，三到四个编号节点用箭头串联，扁平图标，大量留白",
+   "p": [
+    "#0F172A",
+    "#38BDF8",
+    "#F8FAFC",
+    "#F59E0B"
+   ],
+   "comp": "横向等距四步排开，每步一个编号圆 + 上方图标 + 下方留出两行空白，步骤之间箭头连接，四周留出均匀白边",
+   "u": "教程、操作流程、方法论拆解",
+   "w": "节点超过 4 个会挤成一团；箭头必须指向下一个编号，不能乱连；每个节点下方必须留白，否则没地方写字",
+   "m": "Nano Banana Pro / GPT-Image（要排版）｜qwen-image 只能出个大概"
+  },
+  {
+   "id": "S83",
+   "n": "Timeline",
+   "z": "时间线",
+   "c": "信息图",
+   "s": 4,
+   "ae": "vertical timeline infographic, central spine line, alternating circular nodes with dates, muted palette, clean typography zones",
+   "az": "竖向时间线，中央主轴上交替排列圆形节点与日期，低饱和配色",
+   "p": [
+    "#1E293B",
+    "#94A3B8",
+    "#E2E8F0",
+    "#F472B6"
+   ],
+   "comp": "一条竖线贯穿画面，节点左右交替分布，每个节点旁留出一块空白写事件，顶部留出一条空白带",
+   "u": "发展史、项目复盘、品牌历程",
+   "w": "节点间距不均会显得潦草；左右交替时同一侧不要超过两个；日期位置必须对齐竖线",
+   "m": "Nano Banana Pro / GPT-Image"
+  },
+  {
+   "id": "S84",
+   "n": "2x2 Matrix",
+   "z": "四象限矩阵",
+   "c": "信息图",
+   "s": 4,
+   "ae": "2x2 matrix diagram, two crossing axes with labels, four quadrants in distinct muted colors, minimal icons, white space",
+   "az": "四象限矩阵，横纵两条坐标轴交叉，四个象限用低饱和色区分",
+   "p": [
+    "#0F172A",
+    "#60A5FA",
+    "#34D399",
+    "#FBBF24"
+   ],
+   "comp": "画面正中十字轴线，四个象限等大，轴线两端留出空白写维度名，四角留白",
+   "u": "优先级判断、竞品定位、取舍分析",
+   "w": "象限颜色过多会花；轴线标签位置要留白，不要让字压在色块上",
+   "m": "Nano Banana Pro / GPT-Image"
+  },
+  {
+   "id": "S85",
+   "n": "Data Chart",
+   "z": "数据图表",
+   "c": "信息图",
+   "s": 4,
+   "ae": "clean bar and donut chart infographic, single accent color, grid baseline, no 3D, generous margins, editorial style",
+   "az": "简洁柱状与环形图表，单一强调色，细网格线，无 3D 效果",
+   "p": [
+    "#111827",
+    "#22D3EE",
+    "#E5E7EB",
+    "#FB7185"
+   ],
+   "comp": "左侧柱状图占 60%，右侧环形图占 35%，图例在下方横排，四周留出白边",
+   "u": "数据复盘、增长拆解、行业对比",
+   "w": "千万不要写具体数字（必乱码），只画图形骨架；3D 柱状图一律不要",
+   "m": "Nano Banana Pro / GPT-Image｜数字后期标"
+  },
+  {
+   "id": "S86",
+   "n": "Pyramid",
+   "z": "金字塔层级",
+   "c": "信息图",
+   "s": 4,
+   "ae": "three tier pyramid diagram, stacked trapezoids, gradient from dark base to light top, labels on right side with dotted leaders",
+   "az": "三层金字塔，梯形堆叠，底部深色向上渐浅，右侧用虚线引出标签",
+   "p": [
+    "#1E293B",
+    "#64748B",
+    "#CBD5E1",
+    "#F59E0B"
+   ],
+   "comp": "金字塔居中占画面 55%，右侧留出三块空白分别对准三层，用细虚线连接",
+   "u": "需求层次、能力模型、价值分层",
+   "w": "层数超过 4 层会失去「金字塔」的语义；右侧标签区必须留白",
+   "m": "Nano Banana Pro / GPT-Image"
+  },
+  {
+   "id": "S87",
+   "n": "Comparison Table",
+   "z": "对比表格",
+   "c": "信息图",
+   "s": 4,
+   "ae": "two column comparison table, clean rows with hairline dividers, check and cross icons, no grid borders, editorial minimal",
+   "az": "两列对比表格，细线分隔行，用对勾与叉号图标，无外框",
+   "p": [
+    "#0F172A",
+    "#E2E8F0",
+    "#4ADE80",
+    "#F87171"
+   ],
+   "comp": "两列等宽并排，每行一条极细横线分隔，行高统一，顶部留出表头区，四周留白",
+   "u": "方案对比、优缺点、竞品横评",
+   "w": "表格里绝不写文字（会变乱码），只画行与图标；分隔线要细，粗线会像 Excel",
+   "m": "Nano Banana Pro / GPT-Image｜文字后期加"
+  }
+ ]
 }

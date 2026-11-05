@@ -5,8 +5,10 @@ import { fileURLToPath } from "node:url";
 import { thumbPrompt } from "./lib-thumb.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const RAW = JSON.parse(readFileSync(join(HERE, "data", "styles.json"), "utf8"));
-const STYLES = Array.isArray(RAW) ? RAW : RAW.styles || RAW.items || [];
+function loadStyles() {
+  const RAW = JSON.parse(readFileSync(join(HERE, "data", "styles.json"), "utf8"));
+  return Array.isArray(RAW) ? RAW : RAW.styles || RAW.items || [];
+}
 
 const ALI_URL =
   "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation";
@@ -250,9 +252,19 @@ function activeProv(override) {
 /* ---------- 描述优化：用户只会说"AI芯片"，剩下的交给模型补 ---------- */
 
 const CHAT_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions";
+// 扩写要补的不是「句子长度」，是模型猜不到的四件事：材质、光向、景别、决定性细节。
+// 堆形容词（唯美/震撼/高级感）对出图几乎无用——模型只认看得见的东西。
 const OPT_SYS =
-  "你是画面描述助手。用户给一句话想法，你把它扩写成 60-120 字的画面描述，只写看得见的东西：主体长什么样、在做什么、周围是什么环境、光从哪来、整体什么氛围。" +
-  "不提风格名、不提画质、不提参数、不写'一张/一幅'这类量词开头、不加解释和引号。直接输出描述本身。";
+  "你是画面设计助手。把用户给的一句话变成 60-120 字的画面描述，必须落到能画出来的层面。" +
+  "按这五项想，但**写成连贯的一段话，不分点不编号**：" +
+  "一、主体长什么样（形状、材质、颜色、新旧），具体到能画；" +
+  "二、它在做什么或处于什么姿态；" +
+  "三、环境（在哪里、周围有什么、前景与背景各是什么）；" +
+  "四、光（从哪个方向来、硬还是软、冷还是暖、打在主体哪个位置、有没有影子）；" +
+  "五、一个决定性细节，让画面可信（一道划痕、一缕蒸汽、一点反光、一片落叶、一圈水渍）。" +
+  "禁止出现：风格名、画质词（8K、高清、杰作、电影感、大片）、镜头参数、书名号和引号、" +
+  "以「一张」「一幅」「一个」开头、以「画面中」「图中」这种解说口吻起句。" +
+  "也不要解释你在做什么，直接给描述本身。";
 
 async function optimize(text) {
   const { pid, prov, key } = activeProv();
@@ -387,7 +399,8 @@ async function render(body) {
       optimized = true;
     } catch {}
   }
-  const style = STYLES.find((s) => s.id === body.styleId) || STYLES[0];
+  const ALL = loadStyles();
+  const style = ALL.find((s) => s.id === body.styleId) || ALL[0];
   const use = USES[body.use] ? body.use : "gzh-cover";
   const u = USES[use];
   // body.prompt 是「补齐风格预览图」用的完整提示词，不走拼装、也不做自动优化
@@ -571,7 +584,7 @@ function serveFile(req, res) {
   }
 }
 
-const PUBLIC_STYLES = STYLES.map((s) => ({
+const publicStyles = () => loadStyles().map((s) => ({
   id: s.id,
   name: s.z,
   cat: s.c,
@@ -582,7 +595,7 @@ const PUBLIC_STYLES = STYLES.map((s) => ({
 export const inject = ["webServer"];
 
 // 本地自测入口：node -e "import('...index.js').then(m=>m.__test.render({...}))"
-export const __test = { render, buildPrompt, apiKey, OUT_DIR, USES, STYLES };
+export const __test = { render, buildPrompt, apiKey, OUT_DIR, USES, loadStyles };
 
 export function apply(ctx) {
   const offs = [];
@@ -598,7 +611,7 @@ export function apply(ctx) {
       if (!key) {
         return sendJson(res, 400, { ok: false, error: "「" + prov.label + "」还没填 API Key" });
       }
-      const missing = STYLES.filter(
+      const missing = loadStyles().filter(
         (st) =>
           !existsSync(join(THUMB_DIR, st.id + ".webp")) && !existsSync(join(THUMB_DIR, st.id + ".png"))
       );
@@ -633,7 +646,7 @@ export function apply(ctx) {
       const cfg = loadCfg();
       sendJson(res, 200, {
         // 新增的 20 条风格还没出缩略图（百炼欠费），前端据此回退到色带
-        styles: PUBLIC_STYLES.map((st) => ({
+        styles: publicStyles().map((st) => ({
           ...st,
           thumb: existsSync(join(THUMB_DIR, st.id + ".webp")),
         })),
@@ -799,3 +812,5 @@ export function apply(ctx) {
   if (typeof ctx.effect === "function") ctx.effect(() => dispose);
   else if (typeof ctx.on === "function") ctx.on("dispose", dispose);
 }
+
+// reload trigger 02:25

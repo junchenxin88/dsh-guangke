@@ -10,7 +10,7 @@ window.__ModuleLoader__.load({
     const CSS = `
 .fs-root { height: 100%; overflow: auto; background: var(--dsw-alias-bg-base); color: var(--dsw-alias-label-primary); }
 .fs-wrap { max-width: 1080px; margin: 0 auto; padding: 28px 28px 80px; }
-.fs-head { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 22px; }
+.fs-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .fs-headtext { flex: 1; min-width: 0; }
 .fs-gear { flex: none; cursor: pointer; font-family: inherit; font-size: 12.5px; padding: 7px 13px;
   border-radius: 9px; background: var(--dsw-alias-bg-layer-1); border: 1px solid var(--dsw-alias-border-l1);
@@ -35,12 +35,12 @@ window.__ModuleLoader__.load({
 .fs-title { font-size: 20px; font-weight: 650; letter-spacing: -0.01em; margin: 0 0 6px; }
 .fs-sub { font-size: 13px; line-height: 1.65; color: var(--dsw-alias-label-secondary); margin: 0; }
 
-.fs-block { margin-bottom: 30px; }
+.fs-block { margin-bottom: 16px; }
 .fs-label { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: none;
   color: var(--dsw-alias-label-secondary); margin: 0 0 10px; display: flex; align-items: center; gap: 8px; }
 .fs-label::after { content: ""; flex: 1; height: 1px; background: var(--dsw-alias-border-l1); }
 
-.fs-input { width: 100%; box-sizing: border-box; min-height: 84px; resize: vertical;
+.fs-input { width: 100%; box-sizing: border-box; min-height: 60px; resize: vertical;
   padding: 12px 14px; border-radius: 10px; font: inherit; font-size: 14px; line-height: 1.7;
   color: var(--dsw-alias-label-primary); background: var(--dsw-alias-bg-layer-1);
   border: 1px solid var(--dsw-alias-border-l2); outline: none; transition: border-color .15s; }
@@ -222,11 +222,11 @@ window.__ModuleLoader__.load({
 .fs-wrap { max-width: 1180px; padding: 40px 32px 96px; }
 
 .fs-title {
-  font-size: clamp(26px, 2.6vw, 34px);
+  font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.035em;
   line-height: 1.1;
-  margin: 0 0 10px;
+  margin: 0 0 4px;
   background: linear-gradient(96deg, #F2F8FF 4%, #5EEAD4 34%, #22D3EE 58%, #A78BFA 92%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -234,8 +234,8 @@ window.__ModuleLoader__.load({
   filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.35)) drop-shadow(0 0 46px rgba(124, 58, 237, 0.22));
 }
 .fs-sub {
-  font-size: 13.5px;
-  line-height: 1.75;
+  font-size: 12.5px;
+  line-height: 1.5;
   letter-spacing: 0.01em;
   color: #7E93AC;
   max-width: 62ch;
@@ -573,7 +573,7 @@ window.__ModuleLoader__.load({
               h(
                 "p",
                 { className: "fs-sub" },
-                "把一句话刻成一张图。选一张看着顺眼的卡片，剩下的交给我。出的是干净底图，标题后期用排版工具叠——模型写中文字会翻车，这一步别省。"
+                "把一句话刻成一张图。剩下的交给我。"
               )
             ),
             h(
@@ -717,11 +717,7 @@ window.__ModuleLoader__.load({
                 "短句自动补全画面"
               )
             ),
-            h(
-              "div",
-              { className: "fs-hint" },
-              "写清「什么东西 + 什么环境」就够，不用写风格和参数。句子太短时我会先替你补全。Ctrl/Cmd + Enter 直接生成。"
-            )
+
           ),
 
           h(
