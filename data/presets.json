@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "note": "预设 = 一个主风格 + 一个材质混搭。主风格管构图和配色，混搭只管材质与笔触——两个主风格的构图骨架会互相打架，出图必糊。",
+  "presets": [
+    {
+      "id": "cyber-night",
+      "z": "赛博夜景",
+      "e": "Cyber night",
+      "styleId": "S30",
+      "mix": "S37",
+      "use": "gzh-cover",
+      "hint": "霓虹 + 颗粒，暗调城市。科技号封面最稳的一张。"
+    },
+    {
+      "id": "guochao",
+      "z": "国潮海报",
+      "e": "Neo-Chinese",
+      "styleId": "S25",
+      "mix": "S58",
+      "use": "gzh-cover",
+      "hint": "剪纸 + 木刻，红金配色。传统品牌联名、节日内容。"
+    },
+    {
+      "id": "morandi",
+      "z": "高级灰",
+      "e": "Morandi",
+      "styleId": "S77",
+      "mix": "S37",
+      "use": "gzh-inline",
+      "hint": "低饱和 + 细噪点。内文配图不抢正文，适合长文。"
+    },
+    {
+      "id": "xhs-bold",
+      "z": "小红书大字报",
+      "e": "Bold poster",
+      "styleId": "S62",
+      "mix": "S78",
+      "use": "xhs-cover",
+      "hint": "清单大字 + 撞色。首图要在一屏里说清讲什么。"
+    },
+    {
+      "id": "makoto",
+      "z": "日系清透",
+      "e": "Makoto Shinkai",
+      "styleId": "S42",
+      "mix": "S53",
+      "use": "gzh-cover",
+      "hint": "新海诚 + 毛玻璃，蓝天光晕。生活方式、旅行、情感。"
+    },
+    {
+      "id": "film",
+      "z": "复古胶片",
+      "e": "Vintage film",
+      "styleId": "S80",
+      "mix": "S37",
+      "use": "gzh-inline",
+      "hint": "胶片色偏 + 颗粒。怀旧、人物、老品牌。"
+    },
+    {
+      "id": "bauhaus-tech",
+      "z": "包豪斯科技",
+      "e": "Bauhaus tech",
+      "styleId": "S75",
+      "mix": "S51",
+      "use": "gzh-cover",
+      "hint": "几何构成 + 液态金属。比赛博更干净，适合 B 端与硬件。"
+    },
+    {
+      "id": "journal",
+      "z": "手账感",
+      "e": "Journal",
+      "styleId": "S63",
+      "mix": "S57",
+      "use": "xhs-cover",
+      "hint": "便签 + 毛绒质感。母婴、手工、日常记录。"
+    },
+    {
+      "id": "swiss",
+      "z": "极简商务",
+      "e": "Swiss",
+      "styleId": "S74",
+      "mix": "S53",
+      "use": "gzh-inline",
+      "hint": "瑞士网格 + 毛玻璃。汇报、白皮书、严肃内容。"
+    },
+    {
+      "id": "dark-anime",
+      "z": "暗黑二次元",
+      "e": "Dark anime",
+      "styleId": "S48",
+      "mix": "S51",
+      "use": "xhs-cover",
+      "hint": "厚涂暗调 + 金属反光。游戏、番剧、年轻向。"
+    }
+  ]
+}

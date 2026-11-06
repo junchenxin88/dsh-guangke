@@ -51,6 +51,8 @@
 .fs-chips { display: flex; flex-wrap: wrap; gap: 6px 7px; margin-bottom: 12px; }
 .fs-chips::-webkit-scrollbar { display: none; }
 .fs-chips > * { flex: 0 0 auto; }
+.fs-presets .fs-chip { border-style: dashed; }
+.fs-presets .fs-chip[data-on="1"] { border-style: solid; }
 .fs-chip { font-size: 12px; padding: 4px 12px; border-radius: 999px; cursor: pointer;
   border: 1px solid var(--dsw-alias-border-l1); background: transparent;
   color: var(--dsw-alias-label-secondary); transition: all .14s; font-family: inherit; }
@@ -379,6 +381,8 @@
       const [cfg, setCfg] = useState(null);
       const [cat, setCat] = useState("全部");
       const [styleId, setStyleId] = useState("");
+      const [mixId, setMixId] = useState("");
+      const [presetId, setPresetId] = useState("");
       const [use, setUse] = useState("gzh-cover");
       const [topic, setTopic] = useState("");
       const [busy, setBusy] = useState(false);
@@ -446,7 +450,7 @@
           const r = await fetch("/api/forge-studio/render", {
             method: "POST",
             headers: { "content-type": "application/json" },
-            body: JSON.stringify({ topic: topic.trim(), styleId, use, autoOptimize: autoOpt, n: batch }),
+            body: JSON.stringify({ topic: topic.trim(), styleId, mix: mixId || undefined, use, autoOptimize: autoOpt, n: batch }),
           });
           const j = await r.json();
           if (!r.ok || !j.ok) throw new Error(j.error || `生成失败（${r.status}）`);
@@ -460,7 +464,7 @@
         } finally {
           if (alive.current) setBusy(false);
         }
-      }, [busy, topic, styleId, use, autoOpt, batch]);
+      }, [busy, topic, styleId, mixId, use, autoOpt, batch]);
 
       const doOverlay = async (src) => {
         if (overlaying) return;
@@ -772,6 +776,35 @@
           h(
             "div",
             { className: "fs-block" },
+            (cfg.presets && cfg.presets.length)
+              ? h(
+                  "div",
+                  { className: "fs-block" },
+                  h("div", { className: "fs-label" }, "常用搭配"),
+                  h(
+                    "div",
+                    { className: "fs-chips fs-presets" },
+                    cfg.presets.map((p) =>
+                      h(
+                        "button",
+                        {
+                          key: p.id,
+                          className: "fs-chip",
+                          title: p.hint || "",
+                          "data-on": presetId === p.id ? "1" : "0",
+                          onClick: () => {
+                            setStyleId(p.styleId);
+                            setMixId(p.mix || "");
+                            if (p.use) setUse(p.use);
+                            setPresetId(p.id);
+                          },
+                        },
+                        p.z
+                      )
+                    )
+                  )
+                )
+              : null,
             h("div", { className: "fs-label" }, "选个感觉"),
             h(
               "div",
@@ -806,6 +839,7 @@
                     key: s.id,
                     className: "fs-card",
                     "data-on": s.id === styleId ? "1" : "0",
+                      onClick: () => { setStyleId(s.id); setPresetId(""); },
                     onClick: () => setStyleId(s.id),
                     title: s.use || "",
                   },

@@ -11,6 +11,17 @@ function loadStyles() {
   return Array.isArray(RAW) ? RAW : RAW.styles || RAW.items || [];
 }
 
+// 预设是一组「主风格 + 材质混搭」的常用搭配。单独放一个文件，
+// 想加搭配只改 presets.json，不用动代码。
+function loadPresets() {
+  try {
+    const RAW = JSON.parse(readFileSync(join(HERE, "data", "presets.json"), "utf8"));
+    return Array.isArray(RAW) ? RAW : RAW.presets || [];
+  } catch {
+    return [];
+  }
+}
+
 const ALI_URL =
   "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation";
 const MODEL = "qwen-image-2.0";
@@ -161,7 +172,7 @@ function colorWords(palette) {
 
 /* ---------- 提示词 ---------- */
 
-function buildPrompt(style, topic, use) {
+function buildPrompt(style, topic, use, mix) {
   const u = USES[use] || USES["gzh-cover"];
   const t = String(topic || "").trim().replace(/[。；;]+$/, "");
   // 构图里凡出现「标题」二字，模型就真的给你画一行字——实测三次，右上角固定冒出三个乱码汉字。
@@ -182,12 +193,19 @@ function buildPrompt(style, topic, use) {
     ? "画面上方约五分之一是干净的空白区域，与背景同色、不加任何元素。"
     : u.hole || "";
   const colors = colorWords(style.p);
+  // 混搭：只让次风格贡献「材质/笔触」这一层，不贡献构图和配色。
+  // 两个主风格的构图骨架会互相打架（一个要俯拍一个要仰拍），出图必糊。
+  const mixLine =
+    mix && mix.id !== style.id
+      ? `在材质与笔触上融合${mix.z}的处理方式，但保留上面的构图与配色。`
+      : "";
   return [
     `${style.z}风格插画。`,
     `画面主体：${t}。`,
     comp ? `构图：${comp}。` : "",
     holeText,
     colors ? `配色：${colors}。` : "",
+    mixLine,
     `画面比例 ${u.ratio}。`,
     "画面纯净，只有画面元素本身，没有任何排版元素、符号标记或标识牌。" +
       "物体表面保持纯材质纹理，不刻字、不放标签。",
@@ -542,10 +560,11 @@ async function render(body) {
   }
   const ALL = loadStyles();
   const style = ALL.find((s) => s.id === body.styleId) || ALL[0];
+  const mixStyle = body.mix ? ALL.find((s) => s.id === body.mix) : null;
   const use = USES[body.use] ? body.use : "gzh-cover";
   const u = USES[use];
   // body.prompt 是「补齐风格预览图」用的完整提示词，不走拼装、也不做自动优化
-  const prompt = body.prompt ? String(body.prompt) : buildPrompt(style, topic, use);
+  const prompt = body.prompt ? String(body.prompt) : buildPrompt(style, topic, use, mixStyle);
 
   const { pid, prov, base, model, key } = activeProv(body.provider);
   if (!key) {
@@ -791,6 +810,11 @@ export function apply(ctx) {
           thumb: existsSync(join(THUMB_DIR, st.id + ".webp")),
         })),
         uses: Object.entries(USES).map(([id, u]) => ({ id, label: u.label, hint: u.hint })),
+        presets: loadPresets().filter((p) => {
+          // 预设里引用的风格必须真存在，缺一个就整条丢掉，别让前端点到空卡
+          const ids = loadStyles().map((s) => s.id);
+          return ids.includes(p.styleId) && (!p.mix || ids.includes(p.mix));
+        }),
         hasKey: Boolean(activeProv().key),
         outDir: OUT_DIR,
         provider: cfg.provider,
