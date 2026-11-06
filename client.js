@@ -1,4 +1,4 @@
-﻿window.__ModuleLoader__.load({
+window.__ModuleLoader__.load({
   id: "dsh-guangke",
   factory(require) {
     const React = require("react");
@@ -776,7 +776,7 @@
           h(
             "div",
             { className: "fs-block" },
-            (cfg.presets && cfg.presets.length)
+            (cfg && cfg.presets && cfg.presets.length)
               ? h(
                   "div",
                   { className: "fs-block" },
