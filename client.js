@@ -112,6 +112,10 @@
 .fs-ghost:hover { border-color: var(--dsw-alias-brand-primary); }
 .fs-status { font-size: 12.5px; color: var(--dsw-alias-label-secondary); }
 
+.fs-grid-out { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 8px; }
+.fs-thumb-out { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--dsw-alias-border-l1); }
+.fs-thumb-out img { display: block; width: 100%; height: auto; }
+.fs-thumb-out span { position: absolute; left: 8px; bottom: 6px; font-size: 11px; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.9); }
 .fs-out { margin-top: 8px; border-radius: 12px; overflow: hidden;
   border: 1px solid var(--dsw-alias-border-l1); background: var(--dsw-alias-bg-layer-1); }
 .fs-out img { display: block; width: 100%; height: auto; }
@@ -390,6 +394,11 @@
       const [testMsg, setTestMsg] = useState(null);
       const [err, setErr] = useState("");
       const [out, setOut] = useState(null);
+      const [batch, setBatch] = useState(1);
+      const [title, setTitle] = useState("");
+      const [titleSub, setTitleSub] = useState("");
+      const [overlaying, setOverlaying] = useState(false);
+      const [hist, setHist] = useState([]);
       const alive = useRef(true);
 
       useEffect(() => {
@@ -437,17 +446,49 @@
           const r = await fetch("/api/forge-studio/render", {
             method: "POST",
             headers: { "content-type": "application/json" },
-            body: JSON.stringify({ topic: topic.trim(), styleId, use, autoOptimize: autoOpt }),
+            body: JSON.stringify({ topic: topic.trim(), styleId, use, autoOptimize: autoOpt, n: batch }),
           });
           const j = await r.json();
           if (!r.ok || !j.ok) throw new Error(j.error || `生成失败（${r.status}）`);
           setOut(j);
+          fetch("/api/forge-studio/history?limit=24")
+            .then((x) => x.json())
+            .then((h) => { if (alive.current && h.ok) setHist(h.items); })
+            .catch(() => {});
         } catch (e) {
           setErr(String(e.message || e));
         } finally {
           if (alive.current) setBusy(false);
         }
-      }, [busy, topic, styleId, use, autoOpt]);
+      }, [busy, topic, styleId, use, autoOpt, batch]);
+
+      const doOverlay = async (src) => {
+        if (overlaying) return;
+        if (!title.trim()) {
+          setErr("先写个标题");
+          return;
+        }
+        setOverlaying(true);
+        setErr("");
+        try {
+          const r = await fetch("/api/forge-studio/overlay", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              name: src || out?.name,
+              title: title.trim(),
+              sub: titleSub.trim(),
+            }),
+          });
+          const j = await r.json();
+          if (!r.ok || !j.ok) throw new Error(j.error || "叠字失败");
+          setOut({ ...out, ok: true, name: j.name, url: j.url, path: j.path, prompt: out?.prompt });
+        } catch (e) {
+          setErr(String(e.message || e));
+        } finally {
+          if (alive.current) setOverlaying(false);
+        }
+      };
 
       const curProv = (cfg?.providers || []).find((p) => p.id === pid) || {};
 
@@ -713,6 +754,16 @@
                   onChange: (e) => setAutoOpt(e.target.checked),
                 }),
                 "短句自动补全画面"
+              ),
+              h(
+                "label",
+                { className: "fs-switch" },
+                h("input", {
+                  type: "checkbox",
+                  checked: batch === 4,
+                  onChange: (e) => setBatch(e.target.checked ? 4 : 1),
+                }),
+                "一次出 4 张"
               )
             ),
 
@@ -853,6 +904,20 @@
                         h("b", null, out.topic)
                       )
                     : null,
+                  out.items && out.items.length > 1
+                    ? h(
+                        "div",
+                        { className: "fs-grid-out" },
+                        out.items.map((it) =>
+                          h(
+                            "div",
+                            { key: it.name, className: "fs-thumb-out" },
+                            h("img", { src: it.url, alt: it.style || "" }),
+                            h("span", null, it.style)
+                          )
+                        )
+                      )
+                    : null,
                   h(
                     "div",
                     { className: "fs-out" },
@@ -878,6 +943,34 @@
                       "button",
                       { className: "fs-ghost", onClick: go, disabled: busy },
                       busy ? "正在出图…" : "再出一张"
+                    )
+                  ),
+                  h(
+                    "div",
+                    { className: "fs-line", style: { marginTop: 12, gap: 8 } },
+                    h("input", {
+                      className: "fs-input",
+                      style: { minHeight: 0, height: 38, flex: "1 1 150px" },
+                      placeholder: "标题（叠到图上）",
+                      value: title,
+                      onChange: (e) => setTitle(e.target.value),
+                    }),
+                    h("input", {
+                      className: "fs-input",
+                      style: { minHeight: 0, height: 38, flex: "1 1 110px" },
+                      placeholder: "英文副标（可选）",
+                      value: titleSub,
+                      onChange: (e) => setTitleSub(e.target.value),
+                    }),
+                    h(
+                      "button",
+                      {
+                        className: "fs-primary",
+                        style: { minWidth: 96 },
+                        onClick: () => doOverlay(out.name),
+                        disabled: overlaying || !title.trim(),
+                      },
+                      overlaying ? "正在叠…" : "叠标题"
                     )
                   ),
                   h(

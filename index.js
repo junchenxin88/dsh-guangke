@@ -1,4 +1,5 @@
-import { readFileSync, writeFileSync, mkdirSync, existsSync, renameSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, renameSync, readdirSync, statSync } from "node:fs";
+import { spawn } from "node:child_process";
 import { join, dirname } from "node:path";
 import { homedir } from "node:os";
 import { fileURLToPath } from "node:url";
@@ -377,6 +378,142 @@ function slug(s) {
     .slice(0, 28) || "image";
 }
 
+
+// ── 叠字：底图 + 程序化排版 ────────────────────────────────────────
+// 模型写中文字必挂，标题一律后期压。本机有 Python 3.12 + Pillow，
+// 找不到就明确报错，不要静默出一张没字的图糊弄过去。
+const PY_CANDIDATES = [
+  process.env.PYTHON,
+  "C:/Users/QCLAW/AppData/Local/Programs/Python/Python312/python.exe",
+  "python",
+  "python3",
+].filter(Boolean);
+
+function runPy(args, timeoutMs = 60000) {
+  return new Promise((resolve, reject) => {
+    const py = PY_CANDIDATES.find((p) => p === "python" || p === "python3" || existsSync(p));
+    if (!py) {
+      const e = new Error("本机找不到 Python，叠字功能用不了。装个 Python + Pillow，或设环境变量 PYTHON 指向 python.exe。");
+      e.status = 400;
+      return reject(e);
+    }
+    const cp = spawn(py, args, { windowsHide: true });
+    let out = "";
+    let err = "";
+    const timer = setTimeout(() => {
+      try { cp.kill(); } catch {}
+      const e = new Error("叠字超时了（超过 60 秒）");
+      e.status = 500;
+      reject(e);
+    }, timeoutMs);
+    cp.stdout.on("data", (d) => (out += d));
+    cp.stderr.on("data", (d) => (err += d));
+    cp.on("error", (e2) => {
+      clearTimeout(timer);
+      const e = new Error("调不起 Python：" + e2.message);
+      e.status = 500;
+      reject(e);
+    });
+    cp.on("close", (code) => {
+      clearTimeout(timer);
+      if (code === 0) return resolve(out);
+      const e = new Error((err || out || "叠字失败，Python 返回 " + code).slice(0, 300));
+      e.status = 500;
+      reject(e);
+    });
+  });
+}
+
+async function overlay(body) {
+  // 只挡路径分隔符与 Windows 非法字符：文件名里有中文、逗号、空格都是正常的
+  const name = String(body.name || "").replace(/[\\/:*?"<>|]/g, "");
+  const title = String(body.title || "").trim();
+  if (!name) {
+    const e = new Error("要指定给哪张图叠字");
+    e.status = 400;
+    throw e;
+  }
+  if (!title) {
+    const e = new Error("标题是空的");
+    e.status = 400;
+    throw e;
+  }
+  const src = join(OUT_DIR, name);
+  if (!existsSync(src)) {
+    const e = new Error("找不到这张图，可能已经被删了");
+    e.status = 404;
+    throw e;
+  }
+  const outName = name.replace(/\.(png|jpe?g)$/i, "") + "-tilte." + (name.split(".").pop() || "png");
+  const realOut = outName.replace("-tilte.", "-title.");
+  const outPath = join(OUT_DIR, realOut);
+  const args = [
+    join(HERE, "scripts", "overlay.py"),
+    src,
+    outPath,
+    "--title", title,
+    "--darken", String(body.darken ?? 0.55),
+    "--anchor", body.anchor === "center" ? "center" : "left",
+    "--accent", String(body.accent || "FFD16E").replace("#", ""),
+  ];
+  if (body.sub) args.push("--sub", String(body.sub));
+  await runPy(args);
+  return {
+    ok: true,
+    name: realOut,
+    url: "/api/forge-studio/file?name=" + encodeURIComponent(realOut),
+    path: outPath,
+  };
+}
+
+// 最近出过的图：按修改时间倒排，给前端做历史条
+function history(limit = 36) {
+  if (!existsSync(OUT_DIR)) return [];
+  const rows = [];
+  for (const f of readdirSync(OUT_DIR)) {
+    if (!/\.(png|jpe?g)$/i.test(f)) continue;
+    try {
+      const st = statSync(join(OUT_DIR, f));
+      rows.push({ name: f, mtime: st.mtimeMs, size: st.size });
+    } catch {}
+  }
+  rows.sort((a, b) => b.mtime - a.mtime);
+  return rows.slice(0, limit).map((r) => ({
+    ...r,
+    url: "/api/forge-studio/file?name=" + encodeURIComponent(r.name),
+  }));
+}
+
+// 一次要几张：串行出，中间留间隔——百炼 4 并发必撞 429 限流
+async function renderMany(body) {
+  const n = Math.min(4, Math.max(1, Number(body.n) || 1));
+  if (n === 1) {
+    const one = await render(body);
+    return { ...one, items: [one] };
+  }
+  const items = [];
+  let lastErr = null;
+  let sharedTopic = null;
+  for (let i = 0; i < n; i++) {
+    try {
+      const one = await render({
+        ...body,
+        autoOptimize: i === 0 ? body.autoOptimize : false,
+        topicOverride: i > 0 ? sharedTopic : undefined,
+      });
+      if (i === 0) sharedTopic = one.topic;
+      items.push(one);
+    } catch (e) {
+      lastErr = e;
+      // 欠费、key 错这类错误再试也是白试
+      if (e.status === 402 || e.status === 401) break;
+    }
+    if (i < n - 1) await new Promise((r) => setTimeout(r, 900));
+  }
+  if (!items.length) throw lastErr || new Error("一张都没出来");
+  return { ...items[0], items };
+}
+
 async function render(body) {
   const raw = String(body.topic || "").trim();
   if (!raw) {
@@ -393,7 +530,11 @@ async function render(body) {
   // 关掉自动优化、或者优化失败时，原句照用，不能因为优化挂了就不出图。
   let topic = raw;
   let optimized = false;
-  if (body.autoOptimize !== false && raw.length < 18) {
+  if (body.topicOverride && String(body.topicOverride).trim()) {
+    // 一次出多张时复用第一张的扩写结果，别重复烧 token
+    topic = String(body.topicOverride).trim();
+    optimized = true;
+  } else if (body.autoOptimize !== false && raw.length < 18) {
     try {
       topic = await optimize(raw);
       optimized = true;
@@ -435,7 +576,6 @@ async function render(body) {
       size: pid === "zhipu" ? nearestZhipuSize(u.w, u.h) : `${u.w}x${u.h}`,
       response_format: "url",
       watermark: false,
-      sequential_image_generation: "disabled",
     };
   }
 
@@ -673,13 +813,44 @@ export function apply(ctx) {
       if (req.method !== "POST") return sendJson(res, 405, { ok: false, error: "只接受 POST" });
       try {
         const body = await readBody(req);
-        const out = await render(body);
+        const out = await renderMany(body);
         return sendJson(res, 200, out);
       } catch (err) {
         return sendJson(res, err.status || 500, {
           ok: false,
           error: err.message || String(err),
         });
+      }
+    },
+  });
+
+  add({
+    kind: "exact",
+    path: "/api/forge-studio/overlay",
+    handler: async (req, res) => {
+      if (req.method !== "POST") return sendJson(res, 405, { ok: false, error: "只接受 POST" });
+      try {
+        const body = await readBody(req);
+        return sendJson(res, 200, await overlay(body));
+      } catch (err) {
+        return sendJson(res, err.status || 500, {
+          ok: false,
+          error: err.message || String(err),
+        });
+      }
+    },
+  });
+
+  add({
+    kind: "exact",
+    path: "/api/forge-studio/history",
+    handler: (req, res) => {
+      try {
+        const u = new URL(req.url, "http://127.0.0.1");
+        const limit = Math.min(60, Math.max(1, Number(u.searchParams.get("limit")) || 36));
+        return sendJson(res, 200, { ok: true, items: history(limit) });
+      } catch (err) {
+        return sendJson(res, 500, { ok: false, error: String(err && err.message) });
       }
     },
   });

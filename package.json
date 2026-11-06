@@ -1,8 +1,8 @@
 {
   "name": "dsh-guangke",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
-  "description": "光刻 LITHO — 把一句话刻成一张图。87 种插画 / 二次元 / 图文版式 / 信息图风格，出的是能直接压字的干净底图：公众号封面、内文配图、小红书首图。",
+  "description": "光刻 LITHO - 把一句话刻成一张图。87 种插画/二次元/图文版式/信息图风格，出的是能直接压字的干净底图；支持一次出四张、程序化叠标题、出图历史。公众号封面、内文配图、小红书首图。",
   "license": "MIT",
   "author": "LITHO contributors",
   "keywords": [
