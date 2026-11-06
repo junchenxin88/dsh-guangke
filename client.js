@@ -1,5 +1,5 @@
-window.__ModuleLoader__.load({
-  id: "@local/forge-studio",
+﻿window.__ModuleLoader__.load({
+  id: "dsh-guangke",
   factory(require) {
     const React = require("react");
     const { useState, useEffect, useRef, useMemo, useCallback } = React;
@@ -48,9 +48,7 @@ window.__ModuleLoader__.load({
 .fs-input::placeholder { color: var(--dsw-alias-label-secondary); opacity: .7; }
 .fs-hint { font-size: 12px; color: var(--dsw-alias-label-secondary); margin-top: 7px; }
 
-.fs-chips { display: flex; flex-wrap: nowrap; gap: 7px; margin-bottom: 12px; overflow-x: auto; padding-bottom: 2px;
-  scrollbar-width: none; -webkit-mask-image: linear-gradient(to right, #000 95%, transparent 100%);
-  mask-image: linear-gradient(to right, #000 95%, transparent 100%); }
+.fs-chips { display: flex; flex-wrap: wrap; gap: 6px 7px; margin-bottom: 12px; }
 .fs-chips::-webkit-scrollbar { display: none; }
 .fs-chips > * { flex: 0 0 auto; }
 .fs-chip { font-size: 12px; padding: 4px 12px; border-radius: 999px; cursor: pointer;
@@ -219,7 +217,7 @@ window.__ModuleLoader__.load({
 }
 
 /* —— 排版：大字号对比 + 字距收紧，2026 网页主流做法 —— */
-.fs-wrap { max-width: 1180px; padding: 40px 32px 96px; }
+.fs-wrap { max-width: 1180px; padding: 12px 32px 96px; }
 
 .fs-title {
   font-size: 22px;

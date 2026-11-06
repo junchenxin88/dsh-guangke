@@ -21,3 +21,5 @@ Thumbs.db
 
 # 一次性改写脚本（已执行完，不再重复跑）
 scripts/patch-*.mjs
+.publish/
+*.tgz
